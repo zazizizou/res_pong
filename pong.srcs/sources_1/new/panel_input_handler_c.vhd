@@ -41,8 +41,8 @@ entity panel_input_handler_c is
 end panel_input_handler_c;
 
 architecture Behavioral of panel_input_handler_c is
-signal panel_pos_tmp : natural range 0 to WINDOW_HIGHT - PANEL_HIGHT - 1;
-signal panel_speed_counter : natural range 0 to PANEL_SPEED_COUNTER_MAX -1;
+signal panel_pos_tmp : natural range 0 to WINDOW_HIGHT - PANEL_HIGHT - 1 := PANEL_RESET_POS;
+signal panel_speed_counter : natural range 0 to PANEL_SPEED_COUNTER_MAX - 1 := 0;
 begin
   seq : process(clk, res_n)
   begin
