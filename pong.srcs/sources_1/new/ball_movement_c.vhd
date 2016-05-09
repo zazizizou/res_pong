@@ -32,7 +32,7 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity ball_movement_c is
-generic(FIELD_WIDTH, FIELD_HIGHT, RESET_X_POS, RESET_Y_POS, Y_SPEED_COUNTER_MAX, X_SPEED_COUNTER_MAX : natural);
+generic(FIELD_WIDTH, FIELD_HIGHT, BALL_SIZE, RESET_X_POS, RESET_Y_POS, Y_SPEED_COUNTER_MAX, X_SPEED_COUNTER_MAX : natural);
   Port ( clk : in STD_LOGIC;
          res_n : in STD_LOGIC;
          enb : in STD_LOGIC;
@@ -43,8 +43,8 @@ end ball_movement_c;
 architecture Behavioral of ball_movement_c is
 type x_direction_t is (RIGHT, LEFT);
 type y_direction_t is (DOWN, UP);
-signal x_pos_tmp : natural range 0 to FIELD_WIDTH - 1;
-signal y_pos_tmp : natural range 0 to FIELD_HIGHT - 1;
+signal x_pos_tmp : natural range 0 to FIELD_WIDTH - BALL_SIZE - 1;
+signal y_pos_tmp : natural range 0 to FIELD_HIGHT - BALL_SIZE - 1;
 signal x_speed_counter : natural range 0 to X_SPEED_COUNTER_MAX - 1 := 0;
 signal y_speed_counter : natural range 0 to Y_SPEED_COUNTER_MAX - 1 := 0;
 signal x_direction : x_direction_t := RIGHT;
@@ -78,7 +78,7 @@ begin
               x_pos_tmp <= x_pos_tmp + 1;
             end if;
           else 
-            if(x_pos_tmp < FIELD_WIDTH - 1) then
+            if(x_pos_tmp < FIELD_WIDTH - BALL_SIZE - 1) then
               x_pos_tmp <= x_pos_tmp + 1;
             else
               x_direction <= LEFT;
@@ -95,7 +95,7 @@ begin
               y_pos_tmp <= y_pos_tmp + 1;
             end if;
           else
-            if(y_pos_tmp < FIELD_HIGHT - 1) then
+            if(y_pos_tmp < FIELD_HIGHT - BALL_SIZE - 1) then
               y_pos_tmp <= y_pos_tmp + 1;
             else
               y_direction <= UP;
