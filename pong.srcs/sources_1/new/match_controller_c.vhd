@@ -34,8 +34,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity match_controller_c is
   Port (clk : in STD_LOGIC;
         res_n : in STD_LOGIC;
-        btn_up : in STD_LOGIC;
-        btn_down : in STD_LOGIC);
+        left_panel_up : in STD_LOGIC;
+        left_panel_down : in STD_LOGIC;
+        right_panel_up : in STD_LOGIC;
+        right_panel_down : in STD_LOGIC);
 end match_controller_c;
 
 architecture Behavioral of match_controller_c is
@@ -49,5 +51,26 @@ component panel_input_handler_c is
          panel_pos : out STD_LOGIC_VECTOR (8 downto 0));
 end component;
 signal DEB_COUNTER_MAX : natural;
+signal left_panel_pos_wire : STD_LOGIC_VECTOR (8 downto 0);
+signal right_panel_pos_wire : STD_LOGIC_VECTOR (8 downto 0);
 begin
+  panel_input_handler_left_I : panel_input_handler_c
+  generic map(PANEL_RESET_POS => 0, PANEL_HIGHT => 50, WINDOW_HIGHT => 640, PANEL_SPEED_COUNTER_MAX => 30)
+  port map(
+    clk => clk,
+    res_n => res_n,
+    btn_up => left_panel_up,
+    btn_down => left_panel_down,
+    panel_pos => left_panel_pos_wire
+  );
+
+  panel_input_handler_right_I : panel_input_handler_c
+  generic map(PANEL_RESET_POS => 0, PANEL_HIGHT => 50, WINDOW_HIGHT => 640, PANEL_SPEED_COUNTER_MAX => 30)
+  port map(
+    clk => clk,
+    res_n => res_n,
+    btn_up => right_panel_up,
+    btn_down => right_panel_down,
+    panel_pos => right_panel_pos_wire
+  );
 end Behavioral;
