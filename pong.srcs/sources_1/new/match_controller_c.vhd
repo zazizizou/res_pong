@@ -34,6 +34,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity match_controller_c is
   Port (clk : in STD_LOGIC;
         res_n : in STD_LOGIC;
+        enb : in STD_LOGIC;
         left_panel_up : in STD_LOGIC;
         left_panel_down : in STD_LOGIC;
         right_panel_up : in STD_LOGIC;
@@ -48,7 +49,17 @@ component panel_input_handler_c is
          btn_down : in STD_LOGIC;
          clk : in STD_LOGIC;
          res_n : in STD_LOGIC;
+         enb : in STD_LOGIC;
          panel_pos : out STD_LOGIC_VECTOR (8 downto 0));
+end component;
+
+component ball_movement_c is
+  generic(FIELD_WIDTH, FIELD_HIGHT, BALL_SIZE, RESET_X_POS, RESET_Y_POS, Y_SPEED_COUNTER_MAX, X_SPEED_COUNTER_MAX : natural);
+  Port ( clk : in STD_LOGIC;
+         res_n : in STD_LOGIC;
+         enb : in STD_LOGIC;
+         x_pos : out STD_LOGIC_VECTOR (9 downto 0);
+         y_pos : out STD_LOGIC_VECTOR (8 downto 0));
 end component;
 signal DEB_COUNTER_MAX : natural;
 signal left_panel_pos_wire : STD_LOGIC_VECTOR (8 downto 0);
@@ -59,6 +70,7 @@ begin
   port map(
     clk => clk,
     res_n => res_n,
+    enb => enb,
     btn_up => left_panel_up,
     btn_down => left_panel_down,
     panel_pos => left_panel_pos_wire
@@ -69,6 +81,7 @@ begin
   port map(
     clk => clk,
     res_n => res_n,
+    enb => enb,
     btn_up => right_panel_up,
     btn_down => right_panel_down,
     panel_pos => right_panel_pos_wire

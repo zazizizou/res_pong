@@ -37,6 +37,7 @@ entity panel_input_handler_c is
          btn_down : in STD_LOGIC;
          clk : in STD_LOGIC;
          res_n : in STD_LOGIC;
+         enb : in STD_LOGIC;
          panel_pos : out STD_LOGIC_VECTOR (8 downto 0));
 end panel_input_handler_c;
 
@@ -50,28 +51,37 @@ begin
       panel_pos_tmp <= PANEL_RESET_POS;
       panel_speed_counter <= 0;
     elsif (rising_edge(clk)) then
-      if ((btn_up = '1') and (btn_down = '0')) then
-        if (panel_speed_counter < PANEL_SPEED_COUNTER_MAX - 1) then
-          panel_speed_counter <= panel_speed_counter + 1;
-        else
+      if (enb = '1') then -- panel movement module is enabled
+        if ((btn_up = '1') and (btn_down = '0')) then -- only btn up is pressed
+          -- dividing clk so the panel moves with the right speed
+          if (panel_speed_counter < PANEL_SPEED_COUNTER_MAX - 1) then
+            panel_speed_counter <= panel_speed_counter + 1;
+          else
+            panel_speed_counter <= 0;
+          end if;
+          -- move panel up if it is not at the top edge
+          if ((panel_pos_tmp > 0) and (panel_speed_counter = 0)) then
+            panel_pos_tmp <= panel_pos_tmp - 1;
+          end if;
+        elsif ((btn_down = '1') and (btn_up = '0')) then -- only btn down is pressed
+          -- dividing clk so the panel moves with the right speed
+          if (panel_speed_counter < PANEL_SPEED_COUNTER_MAX - 1) then
+            panel_speed_counter <= panel_speed_counter + 1;
+          else
+            panel_speed_counter <= 0;
+          end if;
+          -- move panel down if it is not at the bottom edge
+          if ((panel_pos_tmp < WINDOW_HIGHT - PANEL_HIGHT -1) and (panel_speed_counter = 0)) then
+            panel_pos_tmp <= panel_pos_tmp + 1;
+          end if;
+        else -- no btn pressed / both btns pressed
           panel_speed_counter <= 0;
         end if;
-        if ((panel_pos_tmp < WINDOW_HIGHT - PANEL_HIGHT - 1) and (panel_speed_counter = 0)) then
-          panel_pos_tmp <= panel_pos_tmp + 1;
-        end if;
-      elsif ((btn_down = '1') and (btn_up = '0')) then
-        if (panel_speed_counter < PANEL_SPEED_COUNTER_MAX - 1) then
-          panel_speed_counter <= panel_speed_counter + 1;
-        else
-          panel_speed_counter <= 0;
-        end if;
-        if ((panel_pos_tmp > 0) and (panel_speed_counter = 0)) then
-          panel_pos_tmp <= panel_pos_tmp - 1;
-        end if;
-      else
-        panel_speed_counter <= 0;
+      else -- panel movement module is disabled
+        panel_pos_tmp <= PANEL_RESET_POS;
       end if;
     end if;
   end process;
+  -- output
   panel_pos <= STD_LOGIC_VECTOR(to_unsigned(panel_pos_tmp, panel_pos'length));
 end Behavioral;

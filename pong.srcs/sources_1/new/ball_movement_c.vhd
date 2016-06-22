@@ -58,7 +58,8 @@ begin
       x_speed_counter <= 0;
       y_speed_counter <= 0;
     elsif(rising_edge(clk)) then
-      if(enb = '1') then
+      if(enb = '1') then -- ball movement module is enabled
+        --dividing clk so the ball has the right movement speed
         if(x_speed_counter < X_SPEED_COUNTER_MAX - 1) then
           x_speed_counter <= x_speed_counter + 1;
         else
@@ -69,46 +70,48 @@ begin
         else
           y_speed_counter <= 0;
         end if;
+        --move the ball everytime the speed_counter is 0
         if(x_speed_counter = 0) then
-          if(x_direction = LEFT) then
-            if(x_pos_tmp > 0) then
+          if(x_direction = LEFT) then -- ball is moving to the left
+            if(x_pos_tmp > 0) then -- ball is not at the left edge
               x_pos_tmp <= x_pos_tmp - 1;
-            else 
+            else -- ball is at the left edge
               x_direction <= RIGHT;
               x_pos_tmp <= x_pos_tmp + 1;
             end if;
-          else 
-            if(x_pos_tmp < FIELD_WIDTH - BALL_SIZE - 1) then
+          else -- ball is moving to the right
+            if(x_pos_tmp < FIELD_WIDTH - BALL_SIZE - 1) then -- ball is not at the right edge
               x_pos_tmp <= x_pos_tmp + 1;
-            else
+            else -- ball is at the right edge
               x_direction <= LEFT;
               x_pos_tmp <= x_pos_tmp - 1;
             end if;
           end if;
         end if;
         if(y_speed_counter = 0) then
-          if(y_direction = UP) then
-            if(y_pos_tmp > 0) then
+          if(y_direction = UP) then -- ball is moving to the top
+            if(y_pos_tmp > 0) then -- ball is not at the top edge
               y_pos_tmp <= y_pos_tmp - 1;
-            else
+            else -- ball is at the top edge
               y_direction <= DOWN;
               y_pos_tmp <= y_pos_tmp + 1;
             end if;
-          else
-            if(y_pos_tmp < FIELD_HIGHT - BALL_SIZE - 1) then
+          else -- ball is moving to the bottom
+            if(y_pos_tmp < FIELD_HIGHT - BALL_SIZE - 1) then -- ball is not at the bottom edge
               y_pos_tmp <= y_pos_tmp + 1;
-            else
+            else -- ball is at the bottom edge
               y_direction <= UP;
               y_pos_tmp <= y_pos_tmp - 1;
             end if;
           end if;
         end if;
-      else
+      else -- ball movement module is disabled
         x_speed_counter <= 0;
         y_speed_counter <= 0;
       end if;
     end if;
   end process;
+  -- outputs
   x_pos <= STD_LOGIC_VECTOR(to_unsigned(x_pos_tmp, x_pos'length));
   y_pos <= STD_LOGIC_VECTOR(to_unsigned(y_pos_tmp, y_pos'length));
 end Behavioral;
