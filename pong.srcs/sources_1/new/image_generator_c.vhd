@@ -40,6 +40,10 @@ entity image_generator_c is
            x_coord       : in  STD_LOGIC_VECTOR (9 downto 0);
            y_coord       : in  STD_LOGIC_VECTOR (8 downto 0);
            enb           : in  STD_LOGIC;
+           l_scored      : in  STD_LOGIC;
+           r_scored      : in  STD_LOGIC;
+           l_panel_hit   : in  STD_LOGIC;
+           r_panel_hit   : in  STD_LOGIC;
            rgb           : out color_t;
            y_panel_left  : out STD_LOGIC_VECTOR (8 downto 0);
            y_panel_right : out STD_LOGIC_VECTOR (8 downto 0);
