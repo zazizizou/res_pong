@@ -1,3 +1,11 @@
 rm -f *.aux
 rm -f *.log
 rm -f *.toc
+rm -f *.idx
+rm -f *.lof
+rm -f *.nls
+rm -f *.blg
+rm -f *.bbl
+rm -f *.tdo
+rm -f *.out
+rm -f *.lol
