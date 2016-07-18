@@ -1,0 +1,76 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}% fuer das Einbinden von Grafiken
+\usepackage{float}           
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage[procnames]{listings}
+\usepackage{color}
+\usepackage{listings}
+%\usepackage{float}
+%\usepackage[ansinew]{inputenc} 
+%% wenn Sie das ngerman package benutzen, koennen Umlaute als "a.. geschrieben
+%% werden, sonst \"a.. 
+%% dieses package erlaubt, bei deutscher Tastatur Umlaute, ß direkt einzugeben... das hat nicht geklappt :(
+\textheight=250mm
+\textwidth=170mm
+\hoffset= -20mm       % may need change
+\voffset= -30mm       % may need change
+%% everything after % is a comment in LATEX
+\begin{document}
+\definecolor{keywords}{RGB}{255,0,90}
+\definecolor{comments}{RGB}{0,0,113}
+\definecolor{red}{RGB}{160,0,0}
+\definecolor{green}{RGB}{0,150,0}
+ 
+\lstset{language=VHDL, 
+        basicstyle=\ttfamily\small, 
+        keywordstyle=\color{green},
+        commentstyle=\color{comments},
+        stringstyle=\color{red},
+        showstringspaces=false,
+        identifierstyle=\color{black},
+        procnamekeys={def,class}}
+%% we do the title page ourselves
+
+\thispagestyle{empty}     % only for frontpage
+\null\vspace{40mm}
+\begin{center}
+{%%%%%%%%%%%%%%%%%%%%%%%%%% Titel
+\LARGE  Pong Game}
+\\[15mm]
+%%%%%%% Sub title
+\vspace{25mm}
+
+
+
+\parbox{0.9\textwidth}{   %% etwas schmaler als normaler Satz    
+\small }
+\end{center}
+\vfill 
+\begin{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Authors
+Assignment date: 04.07.2016
+\\
+Submission date: 24.07.2016
+\\
+
+Group members: Sebastian Wittka, Felix Kaiser and Habib Gahbiche.
+\end{center}
+\vspace{20mm}
+%% Rueckseite des Titelblatts leer. Bei einseitigem Druck entfernen
+\newpage
+\tableofcontents  
+\null\thispagestyle{empty} 
+
+
+\pagenumbering{arabic} %% start page 1 
+
+\include{section_topic}
+\include{section_implementation}
+\include{section_assessment}
+\include{section_summary}
+\include{section_attachment}
+
+\end{document}
