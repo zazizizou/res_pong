@@ -54,22 +54,22 @@ architecture Behavioral of top_c is
   end component;
 
   component image_generator_c
-    Port ( clk           : in  STD_LOGIC;
-           res_n         : in  STD_LOGIC;
-           btn_up        : in  STD_LOGIC;
-           btn_down      : in  STD_LOGIC;
-           x_coord       : in  STD_LOGIC_VECTOR (9 downto 0);
-           y_coord       : in  STD_LOGIC_VECTOR (8 downto 0);
-           enb           : in  STD_LOGIC;
-           l_scored      : in  STD_LOGIC;
-           r_scored      : in  STD_LOGIC;
-           l_panel_hit   : in  STD_LOGIC;
-           r_panel_hit   : in  STD_LOGIC;
-           rgb           : out color_t;
-           y_panel_left  : out STD_LOGIC_VECTOR (8 downto 0);
-           y_panel_right : out STD_LOGIC_VECTOR (8 downto 0);
-           x_ball        : out STD_LOGIC_VECTOR (9 downto 0);
-           y_ball        : out STD_LOGIC_VECTOR (8 downto 0));
+    Port ( clk            : in  STD_LOGIC;
+           res_n          : in  STD_LOGIC;
+           btn_up         : in  STD_LOGIC;
+           btn_down       : in  STD_LOGIC;
+           x_coord        : in  STD_LOGIC_VECTOR (9 downto 0);
+           y_coord        : in  STD_LOGIC_VECTOR (8 downto 0);
+           enb            : in  STD_LOGIC;
+           l_scored       : in  STD_LOGIC;
+           r_scored       : in  STD_LOGIC;
+           l_paddle_hit   : in  STD_LOGIC;
+           r_paddle_hit   : in  STD_LOGIC;
+           rgb            : out color_t;
+           y_paddle_left  : out STD_LOGIC_VECTOR (8 downto 0);
+           y_paddle_right : out STD_LOGIC_VECTOR (8 downto 0);
+           x_ball         : out STD_LOGIC_VECTOR (9 downto 0);
+           y_ball         : out STD_LOGIC_VECTOR (8 downto 0));
   end component;
 
   component vga_controller_c
@@ -123,22 +123,22 @@ begin
   
   image_generator_I: image_generator_c
   port map (
-    clk           => clk,
-    res_n         => btnCpuReset,
-    btn_up        => btn_up_deb_wire,
-    btn_down      => btn_down_deb_wire,
-    x_coord       => x_coord_wire,
-    y_coord       => y_coord_wire,
-    enb           => enb_wire,
-    l_scored      => '0',
-    r_scored      => '0',
-    l_panel_hit   => '0',
-    r_panel_hit   => '0',
-    rgb           => rgb_wire,
-    y_panel_left  => open,
-    y_panel_right => open,
-    x_ball        => open,
-    y_ball        => open
+    clk            => clk,
+    res_n          => btnCpuReset,
+    btn_up         => btn_up_deb_wire,
+    btn_down       => btn_down_deb_wire,
+    x_coord        => x_coord_wire,
+    y_coord        => y_coord_wire,
+    enb            => enb_wire,
+    l_scored       => '0',
+    r_scored       => '0',
+    l_paddle_hit   => '0',
+    r_paddle_hit   => '0',
+    rgb            => rgb_wire,
+    y_paddle_left  => open,
+    y_paddle_right => open,
+    x_ball         => open,
+    y_ball         => open
   );
   
   color_test : process (clk, btnCpuReset)

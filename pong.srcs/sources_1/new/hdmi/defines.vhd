@@ -67,12 +67,12 @@ constant BALL_RESET_POS_X : natural := 400;
 constant BALL_RESET_POS_Y : natural := 400;
 constant BALL_SPEED_COUNTER_MAX : natural := 2**19;
 
---panel
-constant PANEL_WIDTH : natural := 40;
-constant PANEL_HIGHT : natural := 160;
-constant PANEL_RESET_POS_Y : natural := 200;
-constant L_PANEL_POS_X : natural := 100;
-constant L_PANEL_SPEED_COUNTER_MAX : natural := 2**19;
-constant R_PANEL_POS_X : natural := 940;
-constant R_PANEL_SPEED_COUNTER_MAX : natural := 2**19;
+--paddle
+constant PADDLE_WIDTH : natural := 40;
+constant PADDLE_HIGHT : natural := 160;
+constant PADDLE_RESET_POS_Y : natural := 200;
+constant L_PADDLE_POS_X : natural := 100;
+constant L_PADDLE_SPEED_COUNTER_MAX : natural := 2**19;
+constant R_PADDLE_POS_X : natural := 940;
+constant R_PADDLE_SPEED_COUNTER_MAX : natural := 2**19;
 end package defines;
