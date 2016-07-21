@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 ----------------------------------------------------------------------------------
 -- Company: 
 -- Engineer: 
@@ -22,17 +21,19 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 library work;
 package defines is
+
+constant HDMI : boolean := false;
 ----------------------------------------------------
 -- colors
 -- example: vgaRed = BLACK(RED);
 ----------------------------------------------------
--- type color
-type color_t is array (0 to 2) of STD_LOGIC_VECTOR(3 downto 0);
-
 -- RGB
 constant RED   : natural := 0;
 constant GREEN : natural := 1;
 constant BLUE  : natural := 2;
+
+-- type color
+type color_t is array (0 to 2) of STD_LOGIC_VECTOR(3 downto 0);
 
 -- black
 constant BLACK : color_t := ("0000", "0000", "0000");
@@ -66,51 +67,12 @@ constant BALL_RESET_POS_X : natural := 200;
 constant BALL_RESET_POS_Y : natural := 200;
 constant BALL_SPEED_COUNTER_MAX : natural := 2**19;
 
---panel
-constant PANEL_WIDTH : natural := 20;
-constant PANEL_HIGHT : natural := 80;
-constant PANEL_RESET_POS_Y : natural := 100;
-constant L_PANEL_POS_X : natural := 50;
-constant L_PANEL_SPEED_COUNTER_MAX : natural := 2**19;
-constant R_PANEL_POS_X : natural := 590;
-constant R_PANEL_SPEED_COUNTER_MAX : natural := 2**19;
+--paddle
+constant PADDLE_WIDTH : natural := 20;
+constant PADDLE_HIGHT : natural := 80;
+constant PADDLE_RESET_POS_Y : natural := 100;
+constant L_PADDLE_POS_X : natural := 50;
+constant L_PADDLE_SPEED_COUNTER_MAX : natural := 2**19;
+constant R_PADDLE_POS_X : natural := 570;
+constant R_PADDLE_SPEED_COUNTER_MAX : natural := 2**19;
 end package defines;
-=======
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 07/07/2016 09:57:44 AM
--- Design Name: 
--- Module Name: defines - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-
-package defines is
-----------------------------------------------------
--- colors
-----------------------------------------------------
-
--- black
-constant BLACK_R : STD_LOGIC_VECTOR := "0000"; 
-constant BLACK_G : STD_LOGIC_VECTOR := "0000";
-constant BLACK_B : STD_LOGIC_VECTOR := "0000";
-
--- white
-constant WHITE_R : STD_LOGIC_VECTOR := "1111";
-constant WHITE_G : STD_LOGIC_VECTOR := "1111";
-constant WHITE_B : STD_LOGIC_VECTOR := "1111";
-end defines;
->>>>>>> Stashed changes

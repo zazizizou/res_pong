@@ -2,4 +2,15 @@ pong.cache
 pong.hw
 pong.runs
 pong.xpr
+*.toc
+*.log
+*.aux
+*.idx
+*.lof
+*.nls
+*.blg
+*.bbl
+*.tdo
+*.out
+*.lol
 
