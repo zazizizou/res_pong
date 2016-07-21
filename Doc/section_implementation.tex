@@ -8,12 +8,42 @@ The hardware description of the implemented game pong is divided into six module
     \subsection{Debouncer}
     \subsection{Computer Opponent}
     \subsection{Image Generator}
-	\begin{figure}[here]
-		\centering
-		\includegraphics[scale=0.7]{images/img_gen.jpg}
-		\caption{Schematic of the Image Generator}
-		\label{img_gen}
-	\end{figure}
+	    \begin{figure}[here]
+		    \centering
+		    \includegraphics[scale=0.7]{images/image_generator_schematic.png}
+		    \caption{Schematic of the Image Generator Module}
+		    \label{img_gen_sch}
+	    \end{figure}
+
+        \subsubsection{Wall}
+	        \begin{figure}[here]
+		        \centering
+		        \includegraphics[scale=0.7]{images/wall_schematic.png}
+		        \caption{Schematic of the Wall Module}
+		        \label{wall_sch}
+	        \end{figure}
+        \subsubsection{Ball}
+	        \begin{figure}[here]
+		        \centering
+		        \includegraphics[scale=0.7]{images/ball_schematic.png}
+		        \caption{Schematic of the Ball Module}
+		        \label{ball_sch}
+	        \end{figure}
+        \subsubsection{Paddle}
+	        \begin{figure}[here]
+		        \centering
+		        \includegraphics[scale=0.7]{images/paddle_schematic.png}
+		        \caption{Schematic of the Paddle Module}
+		        \label{paddle_sch}
+	        \end{figure}
+        \subsubsection{Score}
+	        \begin{figure}[here]
+		        \centering
+		        \includegraphics[scale=0.7]{images/score_schematic.png}
+		        \caption{Schematic of the Score Module}
+		        \label{score_sch}
+	        \end{figure}
+
         The Image Generator takes inputs from the players and outputs the video that can be displayed through the HDMI interface of the Atlys board. The panels shown in figure \ref{ball_wall_panel} are submodules of the module \texttt{image\_generator\_c}.
 		This module calculates the movement of the ball and movement the two panels that are controlled by the players. 
 		
