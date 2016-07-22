@@ -8,7 +8,7 @@ The hardware description of the implemented game pong is divided into six module
     \subsection{Debouncer}
     \subsection{Computer Opponent}
     \subsection{Image Generator}
-	    \begin{figure}[here]
+	    \begin{figure}[h]
 		    \centering
 		    \includegraphics[scale=0.7]{images/image_generator_schematic.png}
 		    \caption{Schematic of the Image Generator Module}
@@ -16,28 +16,28 @@ The hardware description of the implemented game pong is divided into six module
 	    \end{figure}
 
         \subsubsection{Wall}
-	        \begin{figure}[here]
+	        \begin{figure}[h]
 		        \centering
 		        \includegraphics[scale=0.7]{images/wall_schematic.png}
 		        \caption{Schematic of the Wall Module}
 		        \label{wall_sch}
 	        \end{figure}
         \subsubsection{Ball}
-	        \begin{figure}[here]
+	        \begin{figure}[h]
 		        \centering
 		        \includegraphics[scale=0.7]{images/ball_schematic.png}
 		        \caption{Schematic of the Ball Module}
 		        \label{ball_sch}
 	        \end{figure}
         \subsubsection{Paddle}
-	        \begin{figure}[here]
+	        \begin{figure}[h]
 		        \centering
 		        \includegraphics[scale=0.7]{images/paddle_schematic.png}
 		        \caption{Schematic of the Paddle Module}
 		        \label{paddle_sch}
 	        \end{figure}
         \subsubsection{Score}
-	        \begin{figure}[here]
+	        \begin{figure}[h]
 		        \centering
 		        \includegraphics[scale=0.7]{images/score_schematic.png}
 		        \caption{Schematic of the Score Module}
@@ -70,7 +70,7 @@ The hardware description of the implemented game pong is divided into six module
 				
 				The AC Link Output Frame carries control and PCM data to the LM4550 control registers and stereo DAC. Output Frames are carried on the \texttt{sdata\_out} signal which is an output from the AC97 Controller and an input to the LM4550 codec. As shown in Figure \ref{LM4550_output_frame}, Output Frames are constructed from thirteen time slots: one Tag Slot followed by twelve Data Slots. Each Frame consists of 256 bits with each of the twelve Data Slots containing 20 bits. Input and Output Frames are aligned to the same SYNC transition.
 					
-			\begin{figure}[here!]
+			\begin{figure}[h]
 			\centering
 				\begin{subfigure}{0.6\textwidth}
 					\centering
