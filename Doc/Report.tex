@@ -8,6 +8,29 @@
 \usepackage[procnames]{listings}
 \usepackage{color}
 \usepackage{listings}
+\usepackage{hyperref}
+
+%/////////////// VHDL Highlight ///////////////////
+\usepackage{listings}
+\lstdefinelanguage{VHDL}{
+  morekeywords={
+    library,use,all,entity,is,port,in,out,end,architecture,of,
+    begin,and
+  },
+  morecomment=[l]--
+}
+
+\usepackage{xcolor}
+\colorlet{keyword}{blue!100!black!80}
+\colorlet{comment}{green!90!black!90}
+\lstdefinestyle{vhdl}{
+  language     = VHDL,
+  basicstyle   = \ttfamily,
+  keywordstyle = \color{keyword}\bfseries,
+  commentstyle = \color{comment}
+}
+
+
 %\usepackage{float}
 %\usepackage[ansinew]{inputenc} 
 %% wenn Sie das ngerman package benutzen, koennen Umlaute als "a.. geschrieben
@@ -24,15 +47,15 @@
 \definecolor{red}{RGB}{160,0,0}
 \definecolor{green}{RGB}{0,150,0}
  
-\lstset{language=VHDL, 
-        basicstyle=\ttfamily\small, 
-        keywordstyle=\color{green},
-        commentstyle=\color{comments},
-        stringstyle=\color{red},
-        showstringspaces=false,
-        identifierstyle=\color{black},
-        procnamekeys={def,class}}
-%% we do the title page ourselves
+%\lstset{language=VHDL, 
+%        basicstyle=\ttfamily\small, 
+%        keywordstyle=\color{green},
+%        commentstyle=\color{comments},
+%        stringstyle=\color{red},
+%        showstringspaces=false,
+%        identifierstyle=\color{black},
+%        procnamekeys={def,class}}
+
 
 \thispagestyle{empty}     % only for frontpage
 \null\vspace{40mm}
@@ -53,7 +76,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Authors
 Assignment date: 04.07.2016
 \\
-Report submission date: 21.07.2016
+Submission date: 24.07.2016
 \\
 
 Group members: Sebastian Wittka, Felix Kaiser and Habib Gahbiche.
@@ -69,7 +92,10 @@ Group members: Sebastian Wittka, Felix Kaiser and Habib Gahbiche.
 \pagenumbering{arabic} %% start page 1 
 \input{section_topic.tex}
 \input{section_implementation.tex}
-\input{section_summary.tex}
-%\input{section_attachment.tex}
+\input{section_assessment.tex}		  
+\input{section_summary}
+\input{section_references}
+
+
 
 \end{document}
