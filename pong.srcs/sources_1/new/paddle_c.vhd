@@ -39,9 +39,9 @@ entity paddle_c is
            enb      : in  STD_LOGIC;
            btn_up   : in  STD_LOGIC;
            btn_down : in  STD_LOGIC;
-           x_coord  : in  STD_LOGIC_VECTOR (9 downto 0);
-           y_coord  : in  STD_LOGIC_VECTOR (8 downto 0);
-           y_pos    : out STD_LOGIC_VECTOR (8 downto 0);
+           x_coord  : in  x_axis_t;
+           y_coord  : in  y_axis_t;
+           y_pos    : out y_axis_t;
            sel      : out STD_LOGIC;
            rgb      : out color_t);
 end paddle_c;

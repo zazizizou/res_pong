@@ -58,18 +58,18 @@ architecture Behavioral of top_c is
            res_n          : in  STD_LOGIC;
            btn_up         : in  STD_LOGIC;
            btn_down       : in  STD_LOGIC;
-           x_coord        : in  STD_LOGIC_VECTOR (9 downto 0);
-           y_coord        : in  STD_LOGIC_VECTOR (8 downto 0);
+           x_coord        : in  x_axis_t;
+           y_coord        : in  y_axis_t;
            enb            : in  STD_LOGIC;
            l_scored       : in  STD_LOGIC;
            r_scored       : in  STD_LOGIC;
            l_paddle_hit   : in  STD_LOGIC;
            r_paddle_hit   : in  STD_LOGIC;
            rgb            : out color_t;
-           y_paddle_left  : out STD_LOGIC_VECTOR (8 downto 0);
-           y_paddle_right : out STD_LOGIC_VECTOR (8 downto 0);
-           x_ball         : out STD_LOGIC_VECTOR (9 downto 0);
-           y_ball         : out STD_LOGIC_VECTOR (8 downto 0));
+           y_paddle_left  : out y_axis_t;
+           y_paddle_right : out y_axis_t;
+           x_ball         : out x_axis_t;
+           y_ball         : out y_axis_t);
   end component;
 
   component vga_controller_c
@@ -77,12 +77,12 @@ architecture Behavioral of top_c is
         res_n   : in  STD_LOGIC;
         h_sync  : out STD_LOGIC;
         v_sync  : out STD_LOGIC;
-        x_coord : out STD_LOGIC_VECTOR(9 downto 0);
-        y_coord : out STD_LOGIC_VECTOR(8 downto 0));
+        x_coord : out x_axis_t;
+        y_coord : out y_axis_t);
   end component;
   
-  signal x_coord_wire      : STD_LOGIC_VECTOR (9 downto 0);
-  signal y_coord_wire      : STD_LOGIC_VECTOR (8 downto 0);
+  signal x_coord_wire      : x_axis_t;
+  signal y_coord_wire      : y_axis_t;
   signal rgb_wire          : color_t;
   signal btn_up_deb_wire   : STD_LOGIC;
   signal btn_down_deb_wire : STD_LOGIC;
