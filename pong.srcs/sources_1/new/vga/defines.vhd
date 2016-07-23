@@ -59,20 +59,20 @@ constant WINDOW_WIDTH : natural := 640;
 constant WINDOW_HIGHT : natural := 480;
 
 --wall
-constant WALL_THICKNESS : natural := 30;
+constant WALL_THICKNESS : natural := 20;
 
 --ball
-constant BALL_SIZE : natural := 20;
+constant BALL_SIZE : natural := 15;
 constant BALL_RESET_POS_X : natural := 200;
 constant BALL_RESET_POS_Y : natural := 200;
 constant BALL_SPEED_COUNTER_MAX : natural := 2**19;
 
 --paddle
-constant PADDLE_WIDTH : natural := 20;
+constant PADDLE_WIDTH : natural := 15;
 constant PADDLE_HIGHT : natural := 80;
 constant PADDLE_RESET_POS_Y : natural := 100;
-constant L_PADDLE_POS_X : natural := 50;
+constant L_PADDLE_POS_X : natural := 30;
 constant L_PADDLE_SPEED_COUNTER_MAX : natural := 2**19;
-constant R_PADDLE_POS_X : natural := 570;
+constant R_PADDLE_POS_X : natural := WINDOW_WIDTH - PADDLE_WIDTH - L_PADDLE_POS_X;
 constant R_PADDLE_SPEED_COUNTER_MAX : natural := 2**19;
 end package defines;

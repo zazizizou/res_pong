@@ -79,7 +79,7 @@ begin
             paddle_speed_counter <= 0;
           end if;
           -- move paddle up if it is not at the top edge
-          if ((paddle_pos_tmp > 0) and (paddle_speed_counter = 0)) then
+          if ((paddle_pos_tmp >= WALL_THICKNESS) and (paddle_speed_counter = 0)) then
             paddle_pos_tmp <= paddle_pos_tmp - 1;
           end if;
         elsif ((btn_down = '1') and (btn_up = '0')) then -- only btn down is pressed
@@ -90,7 +90,7 @@ begin
             paddle_speed_counter <= 0;
           end if;
           -- move paddle down if it is not at the bottom edge
-          if ((paddle_pos_tmp < WINDOW_HIGHT - PADDLE_HIGHT -1) and (paddle_speed_counter = 0)) then
+          if ((paddle_pos_tmp < WINDOW_HIGHT - PADDLE_HIGHT - WALL_THICKNESS) and (paddle_speed_counter = 0)) then
             paddle_pos_tmp <= paddle_pos_tmp + 1;
           end if;
         else -- no btn pressed / both btns pressed

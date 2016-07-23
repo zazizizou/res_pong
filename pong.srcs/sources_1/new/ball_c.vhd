@@ -107,14 +107,14 @@ begin
         end if;
         if(y_speed_counter = 0) then
           if(y_direction = UP) then -- ball is moving to the top
-            if(y_pos_tmp > 0) then -- ball is not at the top edge
+            if(y_pos_tmp >= WALL_THICKNESS) then -- ball is not at the top edge
               y_pos_tmp <= y_pos_tmp - 1;
             else -- ball is at the top edge
               y_direction <= DOWN;
               y_pos_tmp <= y_pos_tmp + 1;
             end if;
           else -- ball is moving to the bottom
-            if(y_pos_tmp < WINDOW_HIGHT - BALL_SIZE - 1) then -- ball is not at the bottom edge
+            if(y_pos_tmp < WINDOW_HIGHT - BALL_SIZE - WALL_THICKNESS) then -- ball is not at the bottom edge
               y_pos_tmp <= y_pos_tmp + 1;
             else -- ball is at the bottom edge
               y_direction <= UP;

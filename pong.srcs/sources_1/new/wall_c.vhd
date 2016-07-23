@@ -49,12 +49,22 @@ begin
   if(res_n = '0') then
     sel <= '0';
   elsif(rising_edge(clk)) then
-    if((to_integer(unsigned(x_coord)) > WALL_THICKNESS) and (to_integer(unsigned(x_coord)) < WINDOW_WIDTH - WALL_THICKNESS)
-        and (to_integer(unsigned(y_coord)) > WALL_THICKNESS) and (to_integer(unsigned(y_coord)) < WINDOW_HIGHT - WALL_THICKNESS)) then
-      sel <= '0';
-    else
+    if(((to_integer(unsigned(x_coord)) >= 0) and (to_integer(unsigned(x_coord)) < WINDOW_WIDTH)
+        and (to_integer(unsigned(y_coord)) >= 0) and (to_integer(unsigned(y_coord)) < WALL_THICKNESS))
+        or ((to_integer(unsigned(x_coord)) >= 0) and (to_integer(unsigned(x_coord)) < WINDOW_WIDTH)
+        and (to_integer(unsigned(y_coord)) >= (WINDOW_HIGHT - WALL_THICKNESS)) and (to_integer(unsigned(y_coord)) < WINDOW_HIGHT))) then
       sel <= '1';
+    else
+      sel <= '0';
     end if;
+  
+  
+--    if((to_integer(unsigned(x_coord)) > WALL_THICKNESS) and (to_integer(unsigned(x_coord)) < WINDOW_WIDTH - WALL_THICKNESS)
+--        and (to_integer(unsigned(y_coord)) > WALL_THICKNESS) and (to_integer(unsigned(y_coord)) < WINDOW_HIGHT - WALL_THICKNESS)) then
+--      sel <= '0';
+--    else
+--      sel <= '1';
+--    end if;
   end if;
   end process;
   rgb <= WHITE;
