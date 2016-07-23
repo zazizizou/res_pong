@@ -65,15 +65,17 @@ component score_c
 end component;
 
 component ball_c
-  Port ( clk     : in  STD_LOGIC;
-         res_n   : in  STD_LOGIC;
-         enb     : in  STD_LOGIC;
-         x_coord : in  x_axis_t;
-         y_coord : in  y_axis_t;
-         x_pos   : out x_axis_t;
-         y_pos   : out y_axis_t;
-         sel     : out STD_LOGIC;
-         rgb     : out color_t);
+  Port ( clk          : in  STD_LOGIC;
+         res_n        : in  STD_LOGIC;
+         enb          : in  STD_LOGIC;
+         l_paddle_hit : in  STD_LOGIC;
+         r_paddle_hit : in  STD_LOGIC;
+         x_coord      : in  x_axis_t;
+         y_coord      : in  y_axis_t;
+         x_pos        : out x_axis_t;
+         y_pos        : out y_axis_t;
+         sel          : out STD_LOGIC;
+         rgb          : out color_t);
 end component;
 
 component paddle_c
@@ -110,6 +112,8 @@ signal l_paddle_rgb_wire : color_t;
 signal r_paddle_sel_wire : STD_LOGIC;
 signal r_paddle_rgb_wire : color_t;
 signal mux_sel_wire      : STD_LOGIC_VECTOR (4 downto 0);
+signal enb_wire          : STD_LOGIC;
+
 begin
 
   score_I: score_c
@@ -127,15 +131,17 @@ begin
 
   ball_I: ball_c
   port map (
-    clk     => clk,
-    res_n   => res_n,
-    enb     => enb,
-    x_coord => x_coord,
-    y_coord => y_coord,
-    x_pos   => x_ball,
-    y_pos   => y_ball,
-    sel     => ball_sel_wire,
-    rgb     => ball_rgb_wire
+    clk          => clk,
+    res_n        => res_n,
+    enb          => enb_wire,
+    l_paddle_hit => l_paddle_hit,
+    r_paddle_hit => r_paddle_hit,
+    x_coord      => x_coord,
+    y_coord      => y_coord,
+    x_pos        => x_ball,
+    y_pos        => y_ball,
+    sel          => ball_sel_wire,
+    rgb          => ball_rgb_wire
   );
   
   l_paddle_I: paddle_c
@@ -143,7 +149,7 @@ begin
   port map (
     clk      => clk,
     res_n    => res_n,
-    enb      => enb,
+    enb      => enb_wire,
     btn_up   => btn_up,
     btn_down => btn_down,
     x_coord  => x_coord,
@@ -158,7 +164,7 @@ begin
   port map (
     clk      => clk,
     res_n    => res_n,
-    enb      => enb,
+    enb      => enb_wire,
     btn_up   => btn_up,
     btn_down => btn_down,
     x_coord  => x_coord,
@@ -179,6 +185,7 @@ begin
   );
 
   mux_sel_wire <= wall_sel_wire & ball_sel_wire & l_paddle_sel_wire & r_paddle_sel_wire & score_sel_wire;
+  enb_wire <= enb and (not l_scored) and (not r_scored);
 
   mux : process(mux_sel_wire, wall_rgb_wire, ball_rgb_wire, l_paddle_rgb_wire, r_paddle_rgb_wire, score_sel_wire)
   begin

@@ -52,6 +52,20 @@ architecture Behavioral of top_c is
           btn     : in  STD_LOGIC;
           deb_btn : out STD_LOGIC);
   end component;
+  
+  component match_controller
+      Port ( 
+          clkfx          : in  STD_LOGIC;
+          res_n          : in  STD_LOGIC;
+          y_paddle_left  : in  y_axis_t;
+          y_paddle_right : in  y_axis_t;
+          x_ball         : in  x_axis_t;
+          y_ball         : in  y_axis_t;
+          l_scored       : out STD_LOGIC;
+          r_scored       : out STD_LOGIC;
+          l_paddle_hit   : out STD_LOGIC;
+          r_paddle_hit   : out STD_LOGIC);
+  end component;
 
   component image_generator_c
     Port ( clk            : in  STD_LOGIC;
@@ -81,12 +95,20 @@ architecture Behavioral of top_c is
         y_coord : out y_axis_t);
   end component;
   
-  signal x_coord_wire      : x_axis_t;
-  signal y_coord_wire      : y_axis_t;
-  signal rgb_wire          : color_t;
-  signal btn_up_deb_wire   : STD_LOGIC;
-  signal btn_down_deb_wire : STD_LOGIC;
-  signal enb_wire          : STD_LOGIC;
+  signal x_coord_wire        : x_axis_t;
+  signal y_coord_wire        : y_axis_t;
+  signal rgb_wire            : color_t;
+  signal btn_up_deb_wire     : STD_LOGIC;
+  signal btn_down_deb_wire   : STD_LOGIC;
+  signal enb_wire            : STD_LOGIC;
+  signal y_paddle_left_wire  : y_axis_t;
+  signal y_paddle_right_wire : y_axis_t;
+  signal x_ball_wire         : x_axis_t;
+  signal y_ball_wire         : y_axis_t;
+  signal l_scored_wire       : STD_LOGIC;
+  signal r_scored_wire       : STD_LOGIC;
+  signal l_paddle_hit_wire   : STD_LOGIC;
+  signal r_paddle_hit_wire   : STD_LOGIC;
 begin
 
   btn_up_debouncer_I : debouncer_c
@@ -105,9 +127,19 @@ begin
     deb_btn => btn_down_deb_wire
   );
   
-  GEN_HDMI: if HDMI = true generate
-  
-  end generate GEN_HDMI;
+  match_controller_I : match_controller
+  port map ( 
+    clkfx          => clk,
+    res_n          => btnCpuReset,
+    y_paddle_left  => y_paddle_left_wire,
+    y_paddle_right => y_paddle_right_wire,
+    x_ball         => x_ball_wire,
+    y_ball         => y_ball_wire,
+    l_scored       => l_scored_wire,
+    r_scored       => r_scored_wire,
+    l_paddle_hit   => l_paddle_hit_wire,
+    r_paddle_hit   => r_paddle_hit_wire
+  );
 
   GEN_VGA: if HDMI = false generate
     vga_controller_I: vga_controller_c
@@ -130,15 +162,15 @@ begin
     x_coord        => x_coord_wire,
     y_coord        => y_coord_wire,
     enb            => enb_wire,
-    l_scored       => '0',
-    r_scored       => '0',
-    l_paddle_hit   => '0',
-    r_paddle_hit   => '0',
+    l_scored       => l_scored_wire,
+    r_scored       => r_scored_wire,
+    l_paddle_hit   => l_paddle_hit_wire,
+    r_paddle_hit   => r_paddle_hit_wire,
     rgb            => rgb_wire,
-    y_paddle_left  => open,
-    y_paddle_right => open,
-    x_ball         => open,
-    y_ball         => open
+    y_paddle_left  => y_paddle_left_wire,
+    y_paddle_right => y_paddle_right_wire,
+    x_ball         => x_ball_wire,
+    y_ball         => y_ball_wire
   );
   
   color_test : process (clk, btnCpuReset)

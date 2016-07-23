@@ -33,15 +33,17 @@ use work.defines.ALL;
 --use UNISIM.VComponents.all;
 
 entity ball_c is
-  Port ( clk     : in  STD_LOGIC;
-         res_n   : in  STD_LOGIC;
-         enb     : in  STD_LOGIC;
-         x_coord : in  x_axis_t;
-         y_coord : in  y_axis_t;
-         x_pos   : out x_axis_t;
-         y_pos   : out y_axis_t;
-         sel     : out STD_LOGIC;
-         rgb     : out color_t);
+  Port ( clk          : in  STD_LOGIC;
+         res_n        : in  STD_LOGIC;
+         enb          : in  STD_LOGIC;
+         l_paddle_hit : in  STD_LOGIC;
+         r_paddle_hit : in  STD_LOGIC;
+         x_coord      : in  x_axis_t;
+         y_coord      : in  y_axis_t;
+         x_pos        : out x_axis_t;
+         y_pos        : out y_axis_t;
+         sel          : out STD_LOGIC;
+         rgb          : out color_t);
 end ball_c;
 
 architecture Behavioral of ball_c is
@@ -72,59 +74,71 @@ begin
     if(res_n = '0') then
       x_pos_tmp <= BALL_RESET_POS_X;
       y_pos_tmp <= BALL_RESET_POS_Y;
+      x_direction <= RIGHT;
+      y_direction <= DOWN;
       x_speed_counter <= 0;
       y_speed_counter <= 0;
     elsif(rising_edge(clk)) then
       if(enb = '1') then -- ball movement module is enabled
-        --dividing clk so the ball has the right movement speed
-        if(x_speed_counter < BALL_SPEED_COUNTER_MAX - 1) then
-          x_speed_counter <= x_speed_counter + 1;
-        else
+        if(l_paddle_hit = '1') then
+          x_direction <= RIGHT;
           x_speed_counter <= 0;
-        end if;
-        if(y_speed_counter < BALL_SPEED_COUNTER_MAX - 1) then
-          y_speed_counter <= y_speed_counter + 1;
+        elsif(r_paddle_hit = '1') then
+          x_direction <= LEFT;
+          x_speed_counter <= 0;
         else
-          y_speed_counter <= 0;
-        end if;
-        --move the ball everytime the speed_counter is 0
-        if(x_speed_counter = 0) then
-          if(x_direction = LEFT) then -- ball is moving to the left
-            if(x_pos_tmp > 0) then -- ball is not at the left edge
-              x_pos_tmp <= x_pos_tmp - 1;
-            else -- ball is at the left edge
-              x_direction <= RIGHT;
-              x_pos_tmp <= x_pos_tmp + 1;
-            end if;
-          else -- ball is moving to the right
-            if(x_pos_tmp < WINDOW_WIDTH - BALL_SIZE - 1) then -- ball is not at the right edge
-              x_pos_tmp <= x_pos_tmp + 1;
-            else -- ball is at the right edge
-              x_direction <= LEFT;
-              x_pos_tmp <= x_pos_tmp - 1;
+          --dividing clk so the ball has the right movement speed
+          if(x_speed_counter < BALL_SPEED_COUNTER_MAX - 1) then
+            x_speed_counter <= x_speed_counter + 1;
+          else
+            x_speed_counter <= 0;
+          end if;
+          if(y_speed_counter < BALL_SPEED_COUNTER_MAX - 1) then
+            y_speed_counter <= y_speed_counter + 1;
+          else
+            y_speed_counter <= 0;
+          end if;
+          --move the ball everytime the speed_counter is 0
+          if(x_speed_counter = 0) then
+            if(x_direction = LEFT) then -- ball is moving to the left
+              if(x_pos_tmp > 0) then -- ball is not at the left edge
+                x_pos_tmp <= x_pos_tmp - 1;
+              else -- ball is at the left edge
+                x_direction <= RIGHT;
+                x_pos_tmp <= x_pos_tmp + 1;
+              end if;
+            else -- ball is moving to the right
+              if(x_pos_tmp < WINDOW_WIDTH - BALL_SIZE - 1) then -- ball is not at the right edge
+                x_pos_tmp <= x_pos_tmp + 1;
+              else -- ball is at the right edge
+                x_direction <= LEFT;
+                x_pos_tmp <= x_pos_tmp - 1;
+              end if;
             end if;
           end if;
-        end if;
-        if(y_speed_counter = 0) then
-          if(y_direction = UP) then -- ball is moving to the top
-            if(y_pos_tmp >= WALL_THICKNESS) then -- ball is not at the top edge
-              y_pos_tmp <= y_pos_tmp - 1;
-            else -- ball is at the top edge
-              y_direction <= DOWN;
-              y_pos_tmp <= y_pos_tmp + 1;
-            end if;
-          else -- ball is moving to the bottom
-            if(y_pos_tmp < WINDOW_HIGHT - BALL_SIZE - WALL_THICKNESS) then -- ball is not at the bottom edge
-              y_pos_tmp <= y_pos_tmp + 1;
-            else -- ball is at the bottom edge
-              y_direction <= UP;
-              y_pos_tmp <= y_pos_tmp - 1;
+          if(y_speed_counter = 0) then
+            if(y_direction = UP) then -- ball is moving to the top
+              if(y_pos_tmp >= WALL_THICKNESS) then -- ball is not at the top edge
+                y_pos_tmp <= y_pos_tmp - 1;
+              else -- ball is at the top edge
+                y_direction <= DOWN;
+                y_pos_tmp <= y_pos_tmp + 1;
+              end if;
+            else -- ball is moving to the bottom
+              if(y_pos_tmp < WINDOW_HIGHT - BALL_SIZE - WALL_THICKNESS) then -- ball is not at the bottom edge
+                y_pos_tmp <= y_pos_tmp + 1;
+              else -- ball is at the bottom edge
+                y_direction <= UP;
+                y_pos_tmp <= y_pos_tmp - 1;
+              end if;
             end if;
           end if;
         end if;
       else -- ball movement module is disabled
         x_pos_tmp <= BALL_RESET_POS_X;
         y_pos_tmp <= BALL_RESET_POS_Y;
+        x_direction <= RIGHT;
+        y_direction <= DOWN;
         x_speed_counter <= 0;
         y_speed_counter <= 0;
       end if;
