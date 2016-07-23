@@ -37,18 +37,18 @@ entity image_generator_c is
            res_n         : in  STD_LOGIC;
            btn_up        : in  STD_LOGIC;
            btn_down      : in  STD_LOGIC;
-           x_coord       : in  STD_LOGIC_VECTOR (9 downto 0);
-           y_coord       : in  STD_LOGIC_VECTOR (8 downto 0);
+           x_coord       : in  x_axis_t;
+           y_coord       : in  y_axis_t;
            enb           : in  STD_LOGIC;
            l_scored      : in  STD_LOGIC;
            r_scored      : in  STD_LOGIC;
            l_paddle_hit  : in  STD_LOGIC;
            r_paddle_hit  : in  STD_LOGIC;
            rgb           : out color_t;
-           y_paddle_left : out STD_LOGIC_VECTOR (8 downto 0);
-           y_paddle_right: out STD_LOGIC_VECTOR (8 downto 0);
-           x_ball        : out STD_LOGIC_VECTOR (9 downto 0);
-           y_ball        : out STD_LOGIC_VECTOR (8 downto 0));
+           y_paddle_left : out y_axis_t;
+           y_paddle_right: out y_axis_t;
+           x_ball        : out x_axis_t;
+           y_ball        : out y_axis_t);
 end image_generator_c;
 
 architecture Behavioral of image_generator_c is
@@ -56,10 +56,10 @@ component ball_c
   Port ( clk     : in  STD_LOGIC;
          res_n   : in  STD_LOGIC;
          enb     : in  STD_LOGIC;
-         x_coord : in  STD_LOGIC_VECTOR (9 downto 0);
-         y_coord : in  STD_LOGIC_VECTOR (8 downto 0);
-         x_pos   : out STD_LOGIC_VECTOR (9 downto 0);
-         y_pos   : out STD_LOGIC_VECTOR (8 downto 0);
+         x_coord : in  x_axis_t;
+         y_coord : in  y_axis_t;
+         x_pos   : out x_axis_t;
+         y_pos   : out y_axis_t;
          sel     : out STD_LOGIC;
          rgb     : out color_t);
 end component;
@@ -73,7 +73,7 @@ component paddle_c
          btn_down : in  STD_LOGIC;
          x_coord  : in  STD_LOGIC_VECTOR;
          y_coord  : in  STD_LOGIC_VECTOR;
-         y_pos    : out STD_LOGIC_VECTOR(8 downto 0);
+         y_pos    : out y_axis_t;
          sel      : out STD_LOGIC;
          rgb      : out color_t);
 end component;
@@ -81,8 +81,8 @@ end component;
 component wall_c
   Port ( clk     : in  STD_LOGIC;
          res_n   : in  STD_LOGIC;
-         x_coord : in  STD_LOGIC_VECTOR(9 downto 0);
-         y_coord : in  STD_LOGIC_VECTOR(8 downto 0);
+         x_coord : in  x_axis_t;
+         y_coord : in  y_axis_t;
          sel     : out STD_LOGIC;
          rgb     : out color_t);
 end component;
