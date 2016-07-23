@@ -96,8 +96,8 @@ begin
         else -- no btn pressed / both btns pressed
           paddle_speed_counter <= 0;
         end if;
-      else -- paddle movement module is disabled
-        paddle_pos_tmp <= PADDLE_RESET_POS_Y;
+      --else -- paddle movement module is disabled
+      --  paddle_pos_tmp <= PADDLE_RESET_POS_Y;
       end if;
     end if;
   end process;
