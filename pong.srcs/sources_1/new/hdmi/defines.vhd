@@ -32,10 +32,6 @@ constant RED   : natural := 0;
 constant GREEN : natural := 1;
 constant BLUE  : natural := 2;
 
---types x/y-axis
-subtype x_axis_t is STD_LOGIC_VECTOR(10 downto 0);
-subtype y_axis_t is STD_LOGIC_VECTOR(9 downto 0);
-
 -- type color
 type color_t is array (0 to 2) of STD_LOGIC_VECTOR(7 downto 0);
 
@@ -67,7 +63,7 @@ constant WALL_THICKNESS : natural := 60;
 
 --ball
 constant BALL_SIZE : natural := 40;
-constant BALL_RESET_POS_X : natural := 400;
+constant BALL_RESET_POS_X : natural := WINDOW_WIDTH/2;
 constant BALL_RESET_POS_Y : natural := 400;
 constant BALL_SPEED_COUNTER_MAX : natural := 2**19;
 
@@ -76,7 +72,9 @@ constant PADDLE_WIDTH : natural := 40;
 constant PADDLE_HIGHT : natural := 160;
 constant PADDLE_RESET_POS_Y : natural := 200;
 constant L_PADDLE_POS_X : natural := 100;
+constant L_PADDLE_BLOCK : natural := L_PADDLE_POS_X+PADDLE_WIDTH;
 constant L_PADDLE_SPEED_COUNTER_MAX : natural := 2**19;
-constant R_PADDLE_POS_X : natural := 940;
+constant R_PADDLE_POS_X : natural := 1180;
+constant R_PADDLE_BLOCK : natural := R_PADDLE_POS_X-PADDLE_WIDTH;
 constant R_PADDLE_SPEED_COUNTER_MAX : natural := 2**19;
 end package defines;
