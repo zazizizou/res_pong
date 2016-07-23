@@ -1,12 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use work.Spar6_Parts.all;	-- include your library here with added components ac97, ac97cmd
 
-
--- Top level design entity to demonstrate commnicaton with the codec
--- on the Atlys board.
--- THESE SIGNALS NEED TO BE MAPPED IN A UCF FILE TO ROUTE THEM EXTERNALLY
--- THIS CAN BE DONE MANUALLY OR VIA PLAN AHEAD OR A SIMILAR PIN MAPPING GUI 
 entity sound_generator_c is
     Port ( clk : in  STD_LOGIC;
            n_reset : in  STD_LOGIC;
@@ -21,7 +15,7 @@ entity sound_generator_c is
 end sound_generator_c;
 
 
-architecture arch of sound_generator_c is
+	architecture arch of sound_generator_c is
 
 	signal L_bus, R_bus, L_bus_out, R_bus_out : std_logic_vector(17 downto 0);	
 	signal cmd_addr : std_logic_vector(7 downto 0);
@@ -33,7 +27,7 @@ architecture arch of sound_generator_c is
 
 	component ac97
 	port(	n_reset        : in  std_logic;
-			clk            : in  std_logic;														
+			clk            : in  std_logic;
 			ac97_sdata_out : out std_logic;						
 			ac97_sdata_in  : in  std_logic;						
 			ac97_sync      : out std_logic;						
@@ -52,7 +46,7 @@ architecture arch of sound_generator_c is
 	
 	
 	component ac97cmd
-	Port (clk: in std_logic;
+	Port (clk				: in std_logic;
 			ac97_ready_sig : in std_logic;
 			cmd_addr 		: out std_logic_vector(7 downto 0);
 			cmd_data 		: out std_logic_vector(15 downto 0);
@@ -60,6 +54,12 @@ architecture arch of sound_generator_c is
 			volume   		: in  std_logic_vector(4 downto 0);  
 			source   		: in  std_logic_vector(2 downto 0)
 			);
+	end component;
+	
+	component sine_generator_c
+	Port ( clk : in  STD_LOGIC;
+           res_n : in  STD_LOGIC;
+           sine_out : out  STD_LOGIC_VECTOR (17 downto 0));
 	end component;
 	
 begin
@@ -91,24 +91,30 @@ begin
 					volume => VOLUME, 
 					source => SOURCE, 
 					latching_cmd => latching_cmd);  
+			
+
+	sin : sine_generator_c
+			Port map( clk => clk,
+						res_n => n_reset,
+						sine_out => L_bus);
 	 
 
 
 	-- Latch output back into input for Talkthrough testing
 
-	process ( clk, n_reset, L_bus_out, R_bus_out)
-  
-	begin		
-		if (rising_edge(clk)) then
-			if n_reset = '0' then
-				L_bus <= (others => '0');
-				R_bus <= (others => '0');
-			elsif(ready = '1') then
-				L_bus <= L_bus_out;
-				R_bus <= R_bus_out;
-			end if;
-		end if;
-	end process;
-	
+--	process ( clk, n_reset, L_bus_out, R_bus_out)
+--  
+--	begin		
+--		if (rising_edge(clk)) then
+--			if n_reset = '0' then
+--				L_bus <= (others => '0');
+--				R_bus <= (others => '0');
+--			elsif(ready = '1') then
+--				L_bus <= L_bus_out;
+--				R_bus <= R_bus_out;
+--			end if;
+--		end if;
+--	end process;
+--	
 
 end arch;
