@@ -38,10 +38,10 @@ entity match_controller is
 			  clkfx			: 		in  STD_LOGIC;
 			  res_n			: 		in  STD_LOGIC;
 			  
-			  y_paddle_left: 		in  STD_LOGIC_VECTOR (10 downto 0);
-           y_paddle_right: 		in  STD_LOGIC_VECTOR (10 downto 0);
-           x_ball 		: 	in  STD_LOGIC_VECTOR (10 downto 0);
-           y_ball 		: 	in  STD_LOGIC_VECTOR (10 downto 0);
+			  y_paddle_left: 		in  y_axis_t;
+           y_paddle_right: 		in  y_axis_t;
+           x_ball 		: 	in  x_axis_t;
+           y_ball 		: 	in  y_axis_t;
 			  l_scored 		: 		out  STD_LOGIC;
            r_scored 		: 		out  STD_LOGIC;
            l_paddle_hit : 	out  STD_LOGIC;
