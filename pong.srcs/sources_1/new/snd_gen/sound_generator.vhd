@@ -4,9 +4,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity sound_generator_c is
     Port ( clk : in  STD_LOGIC;
            n_reset : in  STD_LOGIC;
-			  SDATA_IN : in STD_LOGIC;
+			  SDATA_IN : in STD_LOGIC;	
 			  BIT_CLK : in STD_LOGIC;
-			  SOURCE : in STD_LOGIC_VECTOR(2 downto 0);
+			  SOURCE : in STD_LOGIC_VECTOR(3 downto 0);
 			  VOLUME : in STD_LOGIC_VECTOR(4 downto 0);
 			  SYNC : out STD_LOGIC;
 			  SDATA_OUT : out STD_LOGIC;
@@ -17,7 +17,7 @@ end sound_generator_c;
 
 	architecture arch of sound_generator_c is
 
-	signal L_bus, R_bus, L_bus_out, R_bus_out : std_logic_vector(17 downto 0);	
+	signal L_bus, R_bus, R_bus_out, Sine_bus_out : std_logic_vector(17 downto 0);	
 	signal cmd_addr : std_logic_vector(7 downto 0);
 	signal cmd_data : std_logic_vector(15 downto 0);
 	signal ready : std_logic;
@@ -62,6 +62,18 @@ end sound_generator_c;
            sine_out : out  STD_LOGIC_VECTOR (17 downto 0));
 	end component;
 	
+	component music_generator
+	Port ( 	clk : in STD_LOGIC;
+				res_n : in STD_LOGIC;
+				l_paddle_hit_pulse: in STD_LOGIC;
+				r_paddle_hit_pulse: in STD_LOGIC;
+				l_scored_pulse : in STD_LOGIC;
+				r_socred_pulse : in STD_LOGIC;
+				sound_effect_r : out STD_LOGIC_VECTOR(17 downto 0);
+				sound_effect_l : out STD_LOGIC_VECTOR(17 downto 0)
+			  );
+	end component;
+	
 begin
 	
 	
@@ -69,7 +81,7 @@ begin
 		port map(n_reset => n_reset, 
 					clk => clk, 
 					ac97_sdata_out => SDATA_OUT, 
-					ac97_sdata_in => SDATA_IN, 
+					ac97_sdata_in => SDATA_IN, -- wird noch entfernt
 					latching_cmd => latching_cmd,
 					ac97_sync => SYNC, 
 					ac97_bitclk => BIT_CLK, 
@@ -77,8 +89,8 @@ begin
 					ac97_ready_sig => ready,
 					L_out => L_bus, 
 					R_out => R_bus, 
-					L_in => L_bus_out, 
-					R_in => R_bus_out, 
+					L_in => R_bus_out, -- wird noch entfernt
+					R_in => R_bus_out, -- wird noch entfernt
 					cmd_addr => cmd_addr, 
 					cmd_data => cmd_data);
  
@@ -89,15 +101,26 @@ begin
 					cmd_addr => cmd_addr, 
 					cmd_data => cmd_data, 
 					volume => VOLUME, 
-					source => SOURCE, 
+					--source => SOURCE, 
 					latching_cmd => latching_cmd);  
 			
 
 	sin : sine_generator_c
 			Port map( clk => clk,
 						res_n => n_reset,
-						sine_out => L_bus);
-	 
+						sine_out => sine_bus_out);
+		
+	music_gen : music_generator
+			port map( 	clk => clk,
+				res_n => res_n,
+				l_paddle_hit_pulse => source(0),
+				r_paddle_hit_pulse => source(1),
+				l_scored_pulse => source(2),
+				r_socred_pulse => source(3),
+				sound_effect_r => R_out,
+				sound_effect_l => L_out
+			  ); 
+		
 
 
 	-- Latch output back into input for Talkthrough testing
