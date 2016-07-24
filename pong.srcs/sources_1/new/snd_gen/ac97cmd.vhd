@@ -13,8 +13,9 @@ entity ac97cmd is
 		 cmd_addr 		: out std_logic_vector(7 downto 0);
 		 cmd_data 		: out std_logic_vector(15 downto 0);
 		 latching_cmd	: out std_logic;
-		 volume   		: in  std_logic_vector(4 downto 0);  -- input for encoder for volume control 0->31
-		 source   		: in  std_logic_vector(2 downto 0)); -- 000=Mic, 100=LineIn
+		 volume   		: in  std_logic_vector(4 downto 0)  -- input for encoder for volume control 0->31
+		 --source   		: in  std_logic_vector(2 downto 0)); -- 000=Mic, 100=LineIn
+		 );
 end ac97cmd;
 
 
@@ -57,7 +58,7 @@ begin
 	-- states and input signals can be added for real time configuration of 
 	-- any ac97 register
 	-------------------------------------------------------------------------------------------
-	process (next_state, cur_state, atten, source)
+	process (next_state, cur_state, atten)
 	begin
 
 		case cur_state is
@@ -77,7 +78,7 @@ begin
 				cmd <= X"18_0808";  							-- PCM volume
 				next_state <= S6;
 			when S5 =>
-				cmd <= X"1A" & "00000" & source & "00000" & source; -- Record select reg 000->Mic, 001->CD in l/r, 010->Video in l/r, 011->aux in l/r
+				--cmd <= X"1A" & "00000" & source & "00000" & source; -- Record select reg 000->Mic, 001->CD in l/r, 010->Video in l/r, 011->aux in l/r
 				next_state <= S7;		-- 100->line_in l/r, 101->stereo mix, 110->mono mix, 111->phone input
 			when S6 =>
 				cmd <= X"1C_0F0F";  	-- Record gain set to max (22.5dB gain)
