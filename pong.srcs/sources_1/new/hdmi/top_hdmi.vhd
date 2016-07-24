@@ -35,7 +35,7 @@ use work.defines.ALL;
 entity top_hdmi is
   Port (
 		  --SYS_CLK : in  STD_LOGIC;
-		  RSTBTN  : in  std_logic;
+		  --RSTBTN  : in  std_logic;
         SYS_CLK         : in  STD_LOGIC;
         --RSTBTN : in  STD_LOGIC;			RSTBTN disabled
         btnU        : in  STD_LOGIC;
@@ -308,7 +308,7 @@ begin
  
   snd_gen : sound_generator_c
   port map ( clk  => clk, 
-           n_reset => RSTBTN, 
+           n_reset => '1', 
 			  SDATA_IN => AUDSDI,
 			  BIT_CLK => BITCLK,
 			  SOURCE => (l_paddle_hit & r_paddle_hit & l_scored & r_scored),
