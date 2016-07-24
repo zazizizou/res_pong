@@ -39,9 +39,9 @@ entity paddle_c is
            enb      : in  STD_LOGIC;
            btn_up   : in  STD_LOGIC;
            btn_down : in  STD_LOGIC;
-           x_coord  : in  STD_LOGIC_VECTOR (9 downto 0);
-           y_coord  : in  STD_LOGIC_VECTOR (8 downto 0);
-           y_pos    : out STD_LOGIC_VECTOR (8 downto 0);
+           x_coord  : in  x_axis_t;
+           y_coord  : in  y_axis_t;
+           y_pos    : out y_axis_t;
            sel      : out STD_LOGIC;
            rgb      : out color_t);
 end paddle_c;
@@ -79,7 +79,7 @@ begin
             paddle_speed_counter <= 0;
           end if;
           -- move paddle up if it is not at the top edge
-          if ((paddle_pos_tmp > 0) and (paddle_speed_counter = 0)) then
+          if ((paddle_pos_tmp >= WALL_THICKNESS) and (paddle_speed_counter = 0)) then
             paddle_pos_tmp <= paddle_pos_tmp - 1;
           end if;
         elsif ((btn_down = '1') and (btn_up = '0')) then -- only btn down is pressed
@@ -90,14 +90,14 @@ begin
             paddle_speed_counter <= 0;
           end if;
           -- move paddle down if it is not at the bottom edge
-          if ((paddle_pos_tmp < WINDOW_HIGHT - PADDLE_HIGHT -1) and (paddle_speed_counter = 0)) then
+          if ((paddle_pos_tmp < WINDOW_HIGHT - PADDLE_HIGHT - WALL_THICKNESS) and (paddle_speed_counter = 0)) then
             paddle_pos_tmp <= paddle_pos_tmp + 1;
           end if;
         else -- no btn pressed / both btns pressed
           paddle_speed_counter <= 0;
         end if;
-      else -- paddle movement module is disabled
-        paddle_pos_tmp <= PADDLE_RESET_POS_Y;
+      --else -- paddle movement module is disabled
+      --  paddle_pos_tmp <= PADDLE_RESET_POS_Y;
       end if;
     end if;
   end process;
