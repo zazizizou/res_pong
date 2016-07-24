@@ -71,6 +71,9 @@ architecture Behavioral of top_hdmi is
              btn_down         : out STD_LOGIC);
   end component;
 
+
+
+
   component image_generator_c
     Port ( clk              : in  STD_LOGIC;
            res_n            : in  STD_LOGIC;
@@ -175,7 +178,7 @@ begin
     clk     => clkfx,
     res_n   => '1',		-- RSTBTN/reset disabled
     btn     => btnU,
-    deb_btn => btn_up_deb_wire
+    deb_btn => btn_up_right_wire
   );
   
   btn_down_debouncer_I : debouncer_c
@@ -183,7 +186,7 @@ begin
     clk     => clkfx,
     res_n   => '1',		-- RSTBTN/reset disabled
     btn     => btnD,
-    deb_btn => btn_down_deb_wire
+    deb_btn => btn_down_right_wire
   );
   
    clk_wiz_i : clk_wiz_v3_6
@@ -203,9 +206,9 @@ begin
     clk              => clkfx,
     res_n            => '1',
     enb              => enb_wire,
-    y_paddle_left    => y_paddle_left_wire,
-    x_ball           => x_ball_wire,
-    y_ball           => y_ball_wire,
+    y_paddle_left    => y_paddle_left,
+    x_ball           => x_ball,
+    y_ball           => y_ball,
     x_direction_ball => x_direction_ball_wire,
     btn_up           => btn_up_left_wire,
     btn_down         => btn_down_left_wire
