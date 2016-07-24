@@ -53,6 +53,16 @@ architecture Behavioral of top_c is
           deb_btn : out STD_LOGIC);
   end component;
   
+  component computer_opponent_c
+      Port ( clk           : in  STD_LOGIC;
+             res_n         : in  STD_LOGIC;
+             enb           : in  STD_LOGIC;
+             y_paddle_left : in  y_axis_t;
+             y_ball        : in  y_axis_t;
+             btn_up        : out STD_LOGIC;
+             btn_down      : out STD_LOGIC);
+  end component;
+  
   component match_controller
       Port ( 
           clkfx          : in  STD_LOGIC;
@@ -70,8 +80,10 @@ architecture Behavioral of top_c is
   component image_generator_c
     Port ( clk            : in  STD_LOGIC;
            res_n          : in  STD_LOGIC;
-           btn_up         : in  STD_LOGIC;
-           btn_down       : in  STD_LOGIC;
+           btn_up_left    : in  STD_LOGIC;
+           btn_down_left  : in  STD_LOGIC;
+           btn_up_right   : in  STD_LOGIC;
+           btn_down_right : in  STD_LOGIC;
            x_coord        : in  x_axis_t;
            y_coord        : in  y_axis_t;
            enb            : in  STD_LOGIC;
@@ -98,8 +110,10 @@ architecture Behavioral of top_c is
   signal x_coord_wire        : x_axis_t;
   signal y_coord_wire        : y_axis_t;
   signal rgb_wire            : color_t;
-  signal btn_up_deb_wire     : STD_LOGIC;
-  signal btn_down_deb_wire   : STD_LOGIC;
+  signal btn_up_left_wire    : STD_LOGIC;
+  signal btn_down_left_wire  : STD_LOGIC;
+  signal btn_up_right_wire   : STD_LOGIC;
+  signal btn_down_right_wire : STD_LOGIC;
   signal enb_wire            : STD_LOGIC;
   signal y_paddle_left_wire  : y_axis_t;
   signal y_paddle_right_wire : y_axis_t;
@@ -116,7 +130,7 @@ begin
     clk     => clk,
     res_n   => btnCpuReset,
     btn     => btnU,
-    deb_btn => btn_up_deb_wire
+    deb_btn => btn_up_right_wire
   );
   
   btn_down_debouncer_I : debouncer_c
@@ -124,7 +138,18 @@ begin
     clk     => clk,
     res_n   => btnCpuReset,
     btn     => btnD,
-    deb_btn => btn_down_deb_wire
+    deb_btn => btn_down_right_wire
+  );
+  
+  computer_opponent_I: computer_opponent_c
+  port map ( 
+    clk           => clk,
+    res_n         => btnCpuReset,
+    enb           => enb_wire,
+    y_paddle_left => y_paddle_left_wire,
+    y_ball        => y_ball_wire,
+    btn_up        => btn_up_left_wire,
+    btn_down      => btn_down_left_wire
   );
   
   match_controller_I : match_controller
@@ -157,8 +182,10 @@ begin
   port map (
     clk            => clk,
     res_n          => btnCpuReset,
-    btn_up         => btn_up_deb_wire,
-    btn_down       => btn_down_deb_wire,
+    btn_up_left    => btn_up_left_wire,
+    btn_down_left  => btn_down_left_wire,
+    btn_up_right   => btn_up_right_wire,
+    btn_down_right => btn_down_right_wire,
     x_coord        => x_coord_wire,
     y_coord        => y_coord_wire,
     enb            => enb_wire,

@@ -82,10 +82,8 @@ begin
       if(enb = '1') then -- ball movement module is enabled
         if(l_paddle_hit = '1') then
           x_direction <= RIGHT;
-          x_speed_counter <= 0;
         elsif(r_paddle_hit = '1') then
           x_direction <= LEFT;
-          x_speed_counter <= 0;
         else
           --dividing clk so the ball has the right movement speed
           if(x_speed_counter < BALL_SPEED_COUNTER_MAX - 1) then

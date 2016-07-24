@@ -33,22 +33,24 @@ use work.defines.ALL;
 --use UNISIM.VComponents.all;
 
 entity image_generator_c is
-    Port ( clk           : in  STD_LOGIC;
-           res_n         : in  STD_LOGIC;
-           btn_up        : in  STD_LOGIC;
-           btn_down      : in  STD_LOGIC;
-           x_coord       : in  x_axis_t;
-           y_coord       : in  y_axis_t;
-           enb           : in  STD_LOGIC;
-           l_scored      : in  STD_LOGIC;
-           r_scored      : in  STD_LOGIC;
-           l_paddle_hit  : in  STD_LOGIC;
-           r_paddle_hit  : in  STD_LOGIC;
-           rgb           : out color_t;
-           y_paddle_left : out y_axis_t;
-           y_paddle_right: out y_axis_t;
-           x_ball        : out x_axis_t;
-           y_ball        : out y_axis_t);
+    Port ( clk            : in  STD_LOGIC;
+           res_n          : in  STD_LOGIC;
+           btn_up_left    : in  STD_LOGIC;
+           btn_down_left  : in  STD_LOGIC;
+           btn_up_right   : in  STD_LOGIC;
+           btn_down_right : in  STD_LOGIC;
+           x_coord        : in  x_axis_t;
+           y_coord        : in  y_axis_t;
+           enb            : in  STD_LOGIC;
+           l_scored       : in  STD_LOGIC;
+           r_scored       : in  STD_LOGIC;
+           l_paddle_hit   : in  STD_LOGIC;
+           r_paddle_hit   : in  STD_LOGIC;
+           rgb            : out color_t;
+           y_paddle_left  : out y_axis_t;
+           y_paddle_right : out y_axis_t;
+           x_ball         : out x_axis_t;
+           y_ball         : out y_axis_t);
 end image_generator_c;
 
 architecture Behavioral of image_generator_c is
@@ -150,8 +152,8 @@ begin
     clk      => clk,
     res_n    => res_n,
     enb      => enb_wire,
-    btn_up   => btn_up,
-    btn_down => btn_down,
+    btn_up   => btn_up_left,
+    btn_down => btn_down_left,
     x_coord  => x_coord,
     y_coord  => y_coord,
     y_pos    => y_paddle_left,
@@ -165,8 +167,8 @@ begin
     clk      => clk,
     res_n    => res_n,
     enb      => enb_wire,
-    btn_up   => btn_up,
-    btn_down => btn_down,
+    btn_up   => btn_up_right,
+    btn_down => btn_down_right,
     x_coord  => x_coord,
     y_coord  => y_coord,
     y_pos    => y_paddle_right,
