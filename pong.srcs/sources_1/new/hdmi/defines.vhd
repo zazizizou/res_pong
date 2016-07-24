@@ -32,6 +32,10 @@ constant RED   : natural := 0;
 constant GREEN : natural := 1;
 constant BLUE  : natural := 2;
 
+--types x/y-axis
+subtype x_axis_t is STD_LOGIC_VECTOR(10 downto 0);
+subtype y_axis_t is STD_LOGIC_VECTOR(9 downto 0);
+
 -- type color
 type color_t is array (0 to 2) of STD_LOGIC_VECTOR(7 downto 0);
 
@@ -77,6 +81,11 @@ constant L_PADDLE_SPEED_COUNTER_MAX : natural := 2**18;
 constant R_PADDLE_POS_X : natural := WINDOW_WIDTH - PADDLE_WIDTH - L_PADDLE_POS_X;
 constant R_PADDLE_BLOCK : natural := R_PADDLE_POS_X - BALL_SIZE;
 constant R_PADDLE_SPEED_COUNTER_MAX : natural := 2**18;
+
+--computer opponent
+constant X_POS_OFFSET : natural := 200;
+constant LFSR_SIZE    : natural := 8;
+constant LFSR_POLY    : STD_LOGIC_VECTOR := "10001111";
 
 --score
 constant SCORE_BAR_WIDTH : natural := WINDOW_WIDTH / 100;
