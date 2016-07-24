@@ -77,10 +77,15 @@ constant PADDLE_HIGHT : natural := WINDOW_WIDTH / 10;
 constant PADDLE_RESET_POS_Y : natural := WINDOW_WIDTH / 6;
 constant L_PADDLE_POS_X : natural := WINDOW_WIDTH /25;
 constant L_PADDLE_BLOCK : natural := L_PADDLE_POS_X + PADDLE_WIDTH;
-constant L_PADDLE_SPEED_COUNTER_MAX : natural := 2**18;
+constant L_PADDLE_SPEED_COUNTER_MAX : natural := 2**20;
 constant R_PADDLE_POS_X : natural := WINDOW_WIDTH - PADDLE_WIDTH - L_PADDLE_POS_X;
 constant R_PADDLE_BLOCK : natural := R_PADDLE_POS_X - BALL_SIZE;
 constant R_PADDLE_SPEED_COUNTER_MAX : natural := 2**18;
+
+--computer opponent
+constant X_POS_OFFSET : natural := 200;
+constant LFSR_SIZE    : natural := 8;
+constant LFSR_POLY    : STD_LOGIC_VECTOR := "10001111";
 
 --score
 constant SCORE_BAR_WIDTH : natural := WINDOW_WIDTH / 100;
