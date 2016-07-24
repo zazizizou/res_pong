@@ -51,8 +51,8 @@ end sound_generator_c;
 			cmd_addr 		: out std_logic_vector(7 downto 0);
 			cmd_data 		: out std_logic_vector(15 downto 0);
 			latching_cmd	: out std_logic;
-			volume   		: in  std_logic_vector(4 downto 0);  
-			source   		: in  std_logic_vector(2 downto 0)
+			volume   		: in  std_logic_vector(4 downto 0) 
+			--source   		: in  std_logic_vector(2 downto 0)
 			);
 	end component;
 	
@@ -68,7 +68,7 @@ end sound_generator_c;
 				l_paddle_hit_pulse: in STD_LOGIC;
 				r_paddle_hit_pulse: in STD_LOGIC;
 				l_scored_pulse : in STD_LOGIC;
-				r_socred_pulse : in STD_LOGIC;
+				r_scored_pulse : in STD_LOGIC;
 				sound_effect_r : out STD_LOGIC_VECTOR(17 downto 0);
 				sound_effect_l : out STD_LOGIC_VECTOR(17 downto 0)
 			  );
@@ -112,13 +112,13 @@ begin
 		
 	music_gen : music_generator
 			port map( 	clk => clk,
-				res_n => res_n,
+				res_n => n_reset,
 				l_paddle_hit_pulse => source(0),
 				r_paddle_hit_pulse => source(1),
 				l_scored_pulse => source(2),
-				r_socred_pulse => source(3),
-				sound_effect_r => R_out,
-				sound_effect_l => L_out
+				r_scored_pulse => source(3),
+				sound_effect_r => R_bus,
+				sound_effect_l => L_bus
 			  ); 
 		
 
