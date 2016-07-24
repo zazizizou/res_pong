@@ -59,23 +59,36 @@ architecture Behavioral of top_hdmi is
           deb_btn : out STD_LOGIC);
   end component;
 
+  component computer_opponent_c
+      Port ( clk              : in  STD_LOGIC;
+             res_n            : in  STD_LOGIC;
+             enb              : in  STD_LOGIC;
+             y_paddle_left    : in  y_axis_t;
+             x_ball           : in  x_axis_t;
+             y_ball           : in  y_axis_t;
+             x_direction_ball : in  x_direction_t;
+             btn_up           : out STD_LOGIC;
+             btn_down         : out STD_LOGIC);
+  end component;
+
   component image_generator_c
-    Port ( clk            : in  STD_LOGIC;
-           res_n          : in  STD_LOGIC;
-           btn_up         : in  STD_LOGIC;
-           btn_down       : in  STD_LOGIC;
-           x_coord        : in  STD_LOGIC_VECTOR (10 downto 0);
-           y_coord        : in  STD_LOGIC_VECTOR (10 downto 0);
-           enb            : in  STD_LOGIC;
-           l_scored       : in  STD_LOGIC;
-           r_scored       : in  STD_LOGIC;
-           l_paddle_hit   : in  STD_LOGIC;
-           r_paddle_hit   : in  STD_LOGIC;
-           rgb            : out color_t;
-           y_paddle_left  : out STD_LOGIC_VECTOR (10 downto 0);
-           y_paddle_right : out STD_LOGIC_VECTOR (10 downto 0);
-           x_ball         : out STD_LOGIC_VECTOR (10 downto 0);
-           y_ball         : out STD_LOGIC_VECTOR (10 downto 0));
+    Port ( clk              : in  STD_LOGIC;
+           res_n            : in  STD_LOGIC;
+           btn_up           : in  STD_LOGIC;
+           btn_down         : in  STD_LOGIC;
+           x_coord          : in  STD_LOGIC_VECTOR (10 downto 0);
+           y_coord          : in  STD_LOGIC_VECTOR (10 downto 0);
+           enb              : in  STD_LOGIC;
+           l_scored         : in  STD_LOGIC;
+           r_scored         : in  STD_LOGIC;
+           l_paddle_hit     : in  STD_LOGIC;
+           r_paddle_hit     : in  STD_LOGIC;
+           rgb              : out color_t;
+           y_paddle_left    : out STD_LOGIC_VECTOR (10 downto 0);
+           y_paddle_right   : out STD_LOGIC_VECTOR (10 downto 0);
+           x_ball           : out STD_LOGIC_VECTOR (10 downto 0);
+           y_ball           : out STD_LOGIC_VECTOR (10 downto 0)
+           x_direction_ball : out x_direction_t);
   end component;
 
 --  component vga_controller_c
@@ -137,8 +150,10 @@ architecture Behavioral of top_hdmi is
   signal x_coord_wire      : STD_LOGIC_VECTOR (10 downto 0);
   signal y_coord_wire      : STD_LOGIC_VECTOR (10 downto 0);
   signal rgb_wire          : color_t;
-  signal btn_up_deb_wire   : STD_LOGIC;
-  signal btn_down_deb_wire : STD_LOGIC;
+  signal btn_up_left_wire      : STD_LOGIC;
+  signal btn_down_left_wire    : STD_LOGIC;
+  signal btn_up_right_wire     : STD_LOGIC;
+  signal btn_down_right_wire   : STD_LOGIC;
   signal enb_wire          : STD_LOGIC;
   signal pclk					: STD_LOGIC;
   signal clkfx					: STD_LOGIC;
@@ -148,6 +163,7 @@ architecture Behavioral of top_hdmi is
   signal y_paddle_right		: STD_LOGIC_VECTOR (10 downto 0);
   signal x_ball 				: STD_LOGIC_VECTOR (10 downto 0);
   signal y_ball 				: STD_LOGIC_VECTOR (10 downto 0);
+  signal x_direction_ball_wire : x_direction_t;
   signal l_scored 			: STD_LOGIC;
   signal r_scored 			: STD_LOGIC;
   signal l_paddle_hit 		: STD_LOGIC;
@@ -181,6 +197,19 @@ begin
 		RESET		=> '0',		-- RSTBTN/reset disabled
 		LOCKED	=> pclk_lckd
 		);
+
+  computer_opponent_I: computer_opponent_c
+  port map ( 
+    clk              => clkfx,
+    res_n            => '1',
+    enb              => enb_wire,
+    y_paddle_left    => y_paddle_left_wire,
+    x_ball           => x_ball_wire,
+    y_ball           => y_ball_wire,
+    x_direction_ball => x_direction_ball_wire,
+    btn_up           => btn_up_left_wire,
+    btn_down         => btn_down_left_wire
+  );
 		
 	match_controller_i : match_controller
    port map ( 
@@ -227,22 +256,25 @@ begin
   
   image_generator_I: image_generator_c
   port map (
-    clk            => clkfx,
-    res_n          => '1',		-- RSTBTN/reset disabled
-    btn_up         => btn_up_deb_wire,
-    btn_down       => btn_down_deb_wire,
-    x_coord        => x_coord_wire,
-    y_coord        => y_coord_wire,
-    enb            => enb_wire,
-    l_scored       => l_scored,
-    r_scored       => r_scored,
-    l_paddle_hit   => l_paddle_hit,
-    r_paddle_hit   => r_paddle_hit,
-    rgb            => rgb_wire,
-    y_paddle_left  => y_paddle_left,
-    y_paddle_right => y_paddle_right,
-    x_ball         => x_ball,
-    y_ball         => y_ball
+    clk              => clkfx,
+    res_n            => '1',		-- RSTBTN/reset disabled
+    btn_up_left      => btn_up_left_wire,
+    btn_down_left    => btn_down_left_wire,
+    btn_up_right     => btn_up_right_wire,
+    btn_down_right   => btn_down_right_wire,
+    x_coord          => x_coord_wire,
+    y_coord          => y_coord_wire,
+    enb              => enb_wire,
+    l_scored         => l_scored,
+    r_scored         => r_scored,
+    l_paddle_hit     => l_paddle_hit,
+    r_paddle_hit     => r_paddle_hit,
+    rgb              => rgb_wire,
+    y_paddle_left    => y_paddle_left,
+    y_paddle_right   => y_paddle_right,
+    x_ball           => x_ball,
+    y_ball           => y_ball,
+    x_direction_ball => x_direction_ball_wire
   );
   
   color_test : process (clkfx) -- , RSTBTN
