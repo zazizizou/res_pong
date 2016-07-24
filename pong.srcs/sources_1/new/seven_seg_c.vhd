@@ -40,8 +40,7 @@ entity seven_seg_c is
            seven_seg : in  STD_LOGIC_VECTOR (6 downto 0);
            x_coord   : in  x_axis_t;
            y_coord   : in  y_axis_t;
-           sel       : out STD_LOGIC;
-           rgb       : out color_t);
+           sel       : out STD_LOGIC);
 end seven_seg_c;
 
 architecture Behavioral of seven_seg_c is
@@ -155,7 +154,5 @@ begin
       sel_g <= '0';
     end if;
   end process;
-  
-  rgb <= WHITE;
   
 end Behavioral;

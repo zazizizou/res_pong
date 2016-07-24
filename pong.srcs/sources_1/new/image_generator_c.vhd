@@ -33,24 +33,25 @@ use work.defines.ALL;
 --use UNISIM.VComponents.all;
 
 entity image_generator_c is
-    Port ( clk            : in  STD_LOGIC;
-           res_n          : in  STD_LOGIC;
-           btn_up_left    : in  STD_LOGIC;
-           btn_down_left  : in  STD_LOGIC;
-           btn_up_right   : in  STD_LOGIC;
-           btn_down_right : in  STD_LOGIC;
-           x_coord        : in  x_axis_t;
-           y_coord        : in  y_axis_t;
-           enb            : in  STD_LOGIC;
-           l_scored       : in  STD_LOGIC;
-           r_scored       : in  STD_LOGIC;
-           l_paddle_hit   : in  STD_LOGIC;
-           r_paddle_hit   : in  STD_LOGIC;
-           rgb            : out color_t;
-           y_paddle_left  : out y_axis_t;
-           y_paddle_right : out y_axis_t;
-           x_ball         : out x_axis_t;
-           y_ball         : out y_axis_t);
+    Port ( clk              : in  STD_LOGIC;
+           res_n            : in  STD_LOGIC;
+           btn_up_left      : in  STD_LOGIC;
+           btn_down_left    : in  STD_LOGIC;
+           btn_up_right     : in  STD_LOGIC;
+           btn_down_right   : in  STD_LOGIC;
+           x_coord          : in  x_axis_t;
+           y_coord          : in  y_axis_t;
+           enb              : in  STD_LOGIC;
+           l_scored         : in  STD_LOGIC;
+           r_scored         : in  STD_LOGIC;
+           l_paddle_hit     : in  STD_LOGIC;
+           r_paddle_hit     : in  STD_LOGIC;
+           rgb              : out color_t;
+           y_paddle_left    : out y_axis_t;
+           y_paddle_right   : out y_axis_t;
+           x_ball           : out x_axis_t;
+           y_ball           : out y_axis_t;
+           x_direction_ball : out x_direction_t);
 end image_generator_c;
 
 architecture Behavioral of image_generator_c is
@@ -76,6 +77,7 @@ component ball_c
          y_coord      : in  y_axis_t;
          x_pos        : out x_axis_t;
          y_pos        : out y_axis_t;
+         x_direction  : out x_direction_t;
          sel          : out STD_LOGIC;
          rgb          : out color_t);
 end component;
@@ -142,6 +144,7 @@ begin
     y_coord      => y_coord,
     x_pos        => x_ball,
     y_pos        => y_ball,
+    x_direction  => x_direction_ball,
     sel          => ball_sel_wire,
     rgb          => ball_rgb_wire
   );
@@ -189,7 +192,7 @@ begin
   mux_sel_wire <= wall_sel_wire & ball_sel_wire & l_paddle_sel_wire & r_paddle_sel_wire & score_sel_wire;
   enb_wire <= enb and (not l_scored) and (not r_scored);
 
-  mux : process(mux_sel_wire, wall_rgb_wire, ball_rgb_wire, l_paddle_rgb_wire, r_paddle_rgb_wire, score_sel_wire)
+  mux : process(mux_sel_wire, wall_rgb_wire, ball_rgb_wire, l_paddle_rgb_wire, r_paddle_rgb_wire, score_rgb_wire)
   begin
     case mux_sel_wire is
       when "11111" => rgb <= wall_rgb_wire;
