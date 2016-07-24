@@ -21,10 +21,11 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use work.defines.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx leaf cells in this code.
@@ -36,8 +37,8 @@ entity vga_controller_c is
         res_n   : in  STD_LOGIC;
         h_sync  : out STD_LOGIC;
         v_sync  : out STD_LOGIC;
-        h_count : out STD_LOGIC_VECTOR(9 downto 0);
-        v_count : out STD_LOGIC_VECTOR(9 downto 0));
+        x_coord : out x_axis_t;
+        y_coord : out y_axis_t);
 end vga_controller_c;
 
 architecture Behavioral of vga_controller_c is
@@ -98,6 +99,6 @@ begin
   res_n_wire <= res_n;
   h_sync <= h_sync_wire;
   v_sync <= v_sync_wire;
-  h_count <= h_count_wire;
-  v_count <= v_count_wire;
+  x_coord <= STD_LOGIC_VECTOR(to_unsigned(to_integer(unsigned(h_count_wire)) - 144, x_coord'length));
+  y_coord <= STD_LOGIC_VECTOR(to_unsigned(to_integer(unsigned(v_count_wire)) - 35, y_coord'length));
 end Behavioral;

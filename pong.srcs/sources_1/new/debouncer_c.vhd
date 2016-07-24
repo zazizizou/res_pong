@@ -21,6 +21,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use work.defines.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -32,16 +33,15 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity debouncer_c is
-  generic(DEB_COUNTER_MAX : natural);
-  Port (clk : in STD_LOGIC;
-        res_n : in STD_LOGIC;
-        btn : in STD_LOGIC;
+  Port (clk     : in  STD_LOGIC;
+        res_n   : in  STD_LOGIC;
+        btn     : in  STD_LOGIC;
         deb_btn : out STD_LOGIC);
 end debouncer_c;
 
 architecture Behavioral of debouncer_c is
 signal prev_btn : STD_LOGIC := '0';
-signal deb_counter : natural range 0 to DEB_COUNTER_MAX := 0;
+signal deb_counter : natural range 0 to DEBOUNCER_COUNTER_MAX := 0;
 begin
   seq : process(res_n, clk)
   begin
@@ -52,7 +52,7 @@ begin
     elsif(rising_edge(clk)) then
       prev_btn <= btn;
       if(prev_btn = btn) then
-        if(deb_counter < DEB_COUNTER_MAX - 1) then
+        if(deb_counter < DEBOUNCER_COUNTER_MAX - 1) then
           deb_counter <= deb_counter + 1;
         else
           deb_btn <= btn;
