@@ -87,7 +87,7 @@ architecture Behavioral of top_hdmi is
            y_paddle_left    : out STD_LOGIC_VECTOR (10 downto 0);
            y_paddle_right   : out STD_LOGIC_VECTOR (10 downto 0);
            x_ball           : out STD_LOGIC_VECTOR (10 downto 0);
-           y_ball           : out STD_LOGIC_VECTOR (10 downto 0)
+           y_ball           : out STD_LOGIC_VECTOR (10 downto 0);
            x_direction_ball : out x_direction_t);
   end component;
 
