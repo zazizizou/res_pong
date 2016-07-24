@@ -77,10 +77,10 @@ TIMESPEC "TS_SYS_CLK" = PERIOD "TNM_SYS_CLK" 100 MHz HIGH 50 % PRIORITY 0 ;
 # Mechanical Switches (SW)
 ##############################################################################
 
-#NET "SW<0>"         LOC = "A10" | IOSTANDARD = LVCMOS33 ;
-#NET "SW<1>"         LOC = "D14" | IOSTANDARD = LVCMOS33 ;
-#NET "SW<2>"         LOC = "C14" | IOSTANDARD = LVCMOS33 ;
-#NET "SW<3>"         LOC = "P15" | IOSTANDARD = LVCMOS33 ;
+NET "SW<0>"         LOC = "A10" | IOSTANDARD = LVCMOS33 ;
+NET "SW<1>"         LOC = "D14" | IOSTANDARD = LVCMOS33 ;
+NET "SW<2>"         LOC = "C14" | IOSTANDARD = LVCMOS33 ;
+NET "SW<3>"         LOC = "P15" | IOSTANDARD = LVCMOS33 ;
 
 
 ##############################################################################
@@ -123,11 +123,5 @@ NET "TMDS(2)"  	LOC = "B8" | IOSTANDARD = TMDS_33 ; # Green
 NET "TMDSB(2)"  LOC = "A8" | IOSTANDARD = TMDS_33 ;
 NET "TMDS(3)"  	LOC = "B6" | IOSTANDARD = TMDS_33 ; # Clock
 NET "TMDSB(3)"  LOC = "A6" | IOSTANDARD = TMDS_33 ;
-
-
-
-
-
-
 
 ##############################################################################

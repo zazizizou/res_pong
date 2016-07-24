@@ -35,19 +35,30 @@ use work.defines.ALL;
 entity top_hdmi is
   Port (
 		  --SYS_CLK : in  STD_LOGIC;
-		  --RSTBTN  : in  std_logic;
+		  RSTBTN  : in  std_logic;
         SYS_CLK         : in  STD_LOGIC;
         --RSTBTN : in  STD_LOGIC;			RSTBTN disabled
         btnU        : in  STD_LOGIC;
         btnD        : in  STD_LOGIC;
 		  
 		  TMDS : out	std_logic_vector(3 downto 0);
-        TMDSB : out	std_logic_vector(3 downto 0));
+        TMDSB : out	std_logic_vector(3 downto 0);
         --Hsync       : out STD_LOGIC;
         --Vsync       : out STD_LOGIC;
         --vgaRed      : out STD_LOGIC_VECTOR(3 downto 0);
         --vgaBlue     : out STD_LOGIC_VECTOR(3 downto 0);
         --vgaGreen    : out STD_LOGIC_VECTOR(3 downto 0));
+		  
+		  -- interface for sound generator
+		  AUDSDI : in STD_LOGIC;
+		  BITCLK : in STD_LOGIC;
+		  SW : in STD_LOGIC_VECTOR (4 downto 0); -- switches for sound volume
+		  AUDSYNC : out STD_LOGIC;
+		  AUDSDO : out STD_LOGIC;
+		  AUDRST : out STD_LOGIC
+		  --
+		  );
+		  
 end top_hdmi;
 
 architecture Behavioral of top_hdmi is
@@ -149,9 +160,22 @@ architecture Behavioral of top_hdmi is
 			y_coord 	: out y_axis_t);
   end component;
   
+	component sound_generator_c
+	port ( clk : in  STD_LOGIC;
+           n_reset : in  STD_LOGIC;
+			  SDATA_IN : in STD_LOGIC;	
+			  BIT_CLK : in STD_LOGIC;
+			  SOURCE : in STD_LOGIC_VECTOR(3 downto 0);
+			  VOLUME : in STD_LOGIC_VECTOR(4 downto 0);
+			  SYNC : out STD_LOGIC;
+			  SDATA_OUT : out STD_LOGIC;
+			  AC97_n_RESET : out STD_LOGIC
+			  );
+	end component;
   
-  
-  
+  -- signals for sound generator
+   
+  --
   signal x_coord_wire      : x_axis_t;
   signal y_coord_wire      : y_axis_t;
   signal rgb_wire          : color_t;
@@ -281,6 +305,19 @@ begin
     y_ball           => y_ball,
     x_direction_ball => x_direction_ball_wire
   );
+ 
+  snd_gen : sound_generator_c
+  port map ( clk  => clk, 
+           n_reset => RSTBTN, 
+			  SDATA_IN => AUDSDI,
+			  BIT_CLK => BITCLK,
+			  SOURCE => (l_paddle_hit & r_paddle_hit & l_scored & r_scored),
+			  VOLUME => SW,
+			  SYNC => AUDSYNC,
+			  SDATA_OUT => AUDSDO,
+			  AC97_n_RESET => AUDRST
+			  );
+
   
   color_test : process (clkfx) -- , RSTBTN
   begin
