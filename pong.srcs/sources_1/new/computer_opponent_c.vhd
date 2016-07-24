@@ -37,6 +37,7 @@ entity computer_opponent_c is
            res_n         : in  STD_LOGIC;
            enb           : in  STD_LOGIC;
            y_paddle_left : in  y_axis_t;
+           x_ball        : in  x_axis_t;
            y_ball        : in  y_axis_t;
            btn_up        : out STD_LOGIC;
            btn_down      : out STD_LOGIC);

@@ -58,6 +58,7 @@ architecture Behavioral of top_c is
              res_n         : in  STD_LOGIC;
              enb           : in  STD_LOGIC;
              y_paddle_left : in  y_axis_t;
+             x_ball        : in  x_axis_t;
              y_ball        : in  y_axis_t;
              btn_up        : out STD_LOGIC;
              btn_down      : out STD_LOGIC);
@@ -147,6 +148,7 @@ begin
     res_n         => btnCpuReset,
     enb           => enb_wire,
     y_paddle_left => y_paddle_left_wire,
+    x_ball        => x_ball_wire,
     y_ball        => y_ball_wire,
     btn_up        => btn_up_left_wire,
     btn_down      => btn_down_left_wire
