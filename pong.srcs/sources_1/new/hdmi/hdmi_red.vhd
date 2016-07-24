@@ -40,11 +40,21 @@ entity hdmi_red is
 			  pclk_lckd	: in std_logic;
            TMDS 		: out	std_logic_vector(3 downto 0);
            TMDSB 		: out	std_logic_vector(3 downto 0);
-			  x_coord 	: out	std_logic_vector(10 downto 0);
-			  y_coord 	: out	std_logic_vector(10 downto 0));
+			  x_coord 	: out	x_axis_t;
+			  y_coord 	: out	y_axis_t);
 end hdmi_red;
 
 architecture Behavioral of hdmi_red is
+
+	signal reset			: std_logic; --out
+	signal bgnd_hcount 	: x_axis_t; --out
+	signal bgnd_vcount 	: y_axis_t; --out
+	signal red_data		: std_logic_vector(7 downto 0) := "00000000"; --in
+	signal blue_data		: std_logic_vector(7 downto 0) := "00000000"; --in
+	signal green_data		: std_logic_vector(7 downto 0) := "00000000"; --in
+	--signal clkfx			: std_logic := '0';
+	--signal pclk_lckd		: std_logic := '0'; 
+	--signal p_count	 	: std_logic_vector(17 downto 0):= "000000000000000000";
 
 	component hdmiTx720p
 	port(
@@ -58,8 +68,8 @@ architecture Behavioral of hdmi_red is
 		pclk_lckd	: in std_logic;
 
 		reset		: out std_logic;	
-		bgnd_hcount : out	std_logic_vector(10 downto 0); 
-		bgnd_vcount : out	std_logic_vector(10 downto 0); 
+		bgnd_hcount : out	x_axis_t; 
+		bgnd_vcount : out	y_axis_t; 
 		red_data : in	std_logic_vector(7 downto 0); 
 		blue_data : in	std_logic_vector(7 downto 0); 
 		green_data : in	std_logic_vector(7 downto 0); 
@@ -69,17 +79,6 @@ architecture Behavioral of hdmi_red is
 	);
 	end component;
 
-	
-	signal reset			: std_logic; --out
-	signal bgnd_hcount 	: std_logic_vector(10 downto 0); --out
-	signal bgnd_vcount 	: std_logic_vector(10 downto 0); --out
-	signal red_data		: std_logic_vector(7 downto 0) := "00000000"; --in
-	signal blue_data		: std_logic_vector(7 downto 0) := "00000000"; --in
-	signal green_data		: std_logic_vector(7 downto 0) := "00000000"; --in
-	--signal clkfx			: std_logic := '0';
-	--signal pclk_lckd		: std_logic := '0'; 
-	--signal p_count	 	: std_logic_vector(17 downto 0):= "000000000000000000";
-	
 begin
 
 	red_data <= rgb_wire(RED);

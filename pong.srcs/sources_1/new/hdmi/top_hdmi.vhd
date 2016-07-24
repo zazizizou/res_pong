@@ -77,20 +77,22 @@ architecture Behavioral of top_hdmi is
   component image_generator_c
     Port ( clk              : in  STD_LOGIC;
            res_n            : in  STD_LOGIC;
-           btn_up           : in  STD_LOGIC;
-           btn_down         : in  STD_LOGIC;
-           x_coord          : in  STD_LOGIC_VECTOR (10 downto 0);
-           y_coord          : in  STD_LOGIC_VECTOR (10 downto 0);
+           btn_up_left      : in  STD_LOGIC;
+           btn_down_left    : in  STD_LOGIC;
+           btn_up_right     : in  STD_LOGIC;
+           btn_down_right   : in  STD_LOGIC;
+           x_coord          : in  x_axis_t;
+           y_coord          : in  y_axis_t;
            enb              : in  STD_LOGIC;
            l_scored         : in  STD_LOGIC;
            r_scored         : in  STD_LOGIC;
            l_paddle_hit     : in  STD_LOGIC;
            r_paddle_hit     : in  STD_LOGIC;
            rgb              : out color_t;
-           y_paddle_left    : out STD_LOGIC_VECTOR (10 downto 0);
-           y_paddle_right   : out STD_LOGIC_VECTOR (10 downto 0);
-           x_ball           : out STD_LOGIC_VECTOR (10 downto 0);
-           y_ball           : out STD_LOGIC_VECTOR (10 downto 0);
+           y_paddle_left    : out y_axis_t;
+           y_paddle_right   : out y_axis_t;
+           x_ball           : out x_axis_t;
+           y_ball           : out y_axis_t;
            x_direction_ball : out x_direction_t);
   end component;
 
@@ -121,10 +123,10 @@ architecture Behavioral of top_hdmi is
 			  clkfx			: 		in  STD_LOGIC;
 			  res_n			: 		in  STD_LOGIC;
 			  
-			  y_paddle_left: 		in  STD_LOGIC_VECTOR (10 downto 0);
-           y_paddle_right: 		in  STD_LOGIC_VECTOR (10 downto 0);
-           x_ball 		: 	in  STD_LOGIC_VECTOR (10 downto 0);
-           y_ball 		: 	in  STD_LOGIC_VECTOR (10 downto 0);
+			  y_paddle_left: 		in  y_axis_t;
+           y_paddle_right: 		in  y_axis_t;
+           x_ball 		: 	in  x_axis_t;
+           y_ball 		: 	in  y_axis_t;
 			  l_scored 		: 		out  STD_LOGIC;
            r_scored 		: 		out  STD_LOGIC;
            l_paddle_hit : 	out  STD_LOGIC;
@@ -143,15 +145,15 @@ architecture Behavioral of top_hdmi is
 			pclk_lckd: in 	std_logic;
          TMDS 		: out	std_logic_vector(3 downto 0);
          TMDSB 	: out	std_logic_vector(3 downto 0);
-			x_coord 	: out STD_LOGIC_VECTOR(10 downto 0);
-			y_coord 	: out STD_LOGIC_VECTOR(10 downto 0));
+			x_coord 	: out x_axis_t;
+			y_coord 	: out y_axis_t);
   end component;
   
   
   
   
-  signal x_coord_wire      : STD_LOGIC_VECTOR (10 downto 0);
-  signal y_coord_wire      : STD_LOGIC_VECTOR (10 downto 0);
+  signal x_coord_wire      : x_axis_t;
+  signal y_coord_wire      : y_axis_t;
   signal rgb_wire          : color_t;
   signal btn_up_left_wire      : STD_LOGIC;
   signal btn_down_left_wire    : STD_LOGIC;
@@ -162,10 +164,10 @@ architecture Behavioral of top_hdmi is
   signal clkfx					: STD_LOGIC;
   signal clk					: STD_LOGIC;
   signal pclk_lckd			: STD_LOGIC;
-  signal y_paddle_left		: STD_LOGIC_VECTOR (10 downto 0);
-  signal y_paddle_right		: STD_LOGIC_VECTOR (10 downto 0);
-  signal x_ball 				: STD_LOGIC_VECTOR (10 downto 0);
-  signal y_ball 				: STD_LOGIC_VECTOR (10 downto 0);
+  signal y_paddle_left		: y_axis_t;
+  signal y_paddle_right		: y_axis_t;
+  signal x_ball 				: x_axis_t;
+  signal y_ball 				: y_axis_t;
   signal x_direction_ball_wire : x_direction_t;
   signal l_scored 			: STD_LOGIC;
   signal r_scored 			: STD_LOGIC;
