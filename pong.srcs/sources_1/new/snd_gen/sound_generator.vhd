@@ -56,12 +56,6 @@ end sound_generator_c;
 			);
 	end component;
 	
-	component sine_generator_c
-	Port ( clk : in  STD_LOGIC;
-           res_n : in  STD_LOGIC;
-           sine_out : out  STD_LOGIC_VECTOR (17 downto 0));
-	end component;
-	
 	component music_generator
 	Port ( 	clk : in STD_LOGIC;
 				res_n : in STD_LOGIC;
@@ -104,11 +98,6 @@ begin
 					--source => SOURCE, 
 					latching_cmd => latching_cmd);  
 			
-
-	sin : sine_generator_c
-			Port map( clk => clk,
-						res_n => n_reset,
-						sine_out => sine_bus_out);
 		
 	music_gen : music_generator
 			port map( 	clk => clk,

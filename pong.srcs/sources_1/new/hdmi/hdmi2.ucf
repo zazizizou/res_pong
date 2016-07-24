@@ -125,3 +125,4 @@ NET "TMDS(3)"  	LOC = "B6" | IOSTANDARD = TMDS_33 ; # Clock
 NET "TMDSB(3)"  LOC = "A6" | IOSTANDARD = TMDS_33 ;
 
 ##############################################################################
+#PIN "clk_wiz_i/clkout1_buf.O" CLOCK_DEDICATED_ROUTE = FALSE;

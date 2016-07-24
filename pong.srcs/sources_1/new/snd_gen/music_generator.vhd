@@ -29,6 +29,7 @@ signal counter : std_logic_vector(28 downto 0) := (others => '0');
 signal music_l_paddle_hit_A : std_logic_vector(17 downto 0);
 signal music_l_paddle_hit_C : std_logic_vector(17 downto 0);
 signal enb_music_l_paddle_hit : std_logic := '0';
+signal enb_l_scored_pulse : std_logic := '0';
 
 
 begin
@@ -56,6 +57,15 @@ begin
 		if counter >= "101111101011110000100000000" then
 				enb_music_l_paddle_hit <= '0';
 		end if;
+		
+		if(rising_edge(l_scored_pulse)) then
+			enb_l_scored_pulse <= '1';
+		else
+			enb_l_scored_pulse <= enb_l_scored_pulse;
+		end if;
+		if counter >= "101111101011110000100000000" then
+				enb_l_scored_pulse <= '0';
+		end if;
 	end process;
 	
 	
@@ -71,6 +81,19 @@ begin
 					counter <= counter + 1;
 				elsif counter >= "10111110101111000010000000" then
 					sound_effect_l <= music_l_paddle_hit_C;
+				elsif counter = "101111101011110000100000000" then -- counts to 1 sec
+					counter <= (others => '0');
+				end if;
+			end if;
+			
+			if enb_l_scored_pulse = '1' then
+				if counter <= "10111110101111000010000000" then -- counts to 0.5 sec
+					sound_effect_l <= music_l_paddle_hit_A; 
+					sound_effect_r <= music_l_paddle_hit_A;
+					counter <= counter + 1;
+				elsif counter >= "10111110101111000010000000" then
+					sound_effect_l <= music_l_paddle_hit_C;
+					sound_effect_r <= music_l_paddle_hit_C;
 				elsif counter = "101111101011110000100000000" then -- counts to 1 sec
 					counter <= (others => '0');
 				end if;
