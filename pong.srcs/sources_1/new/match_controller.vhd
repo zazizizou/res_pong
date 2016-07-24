@@ -38,10 +38,10 @@ entity match_controller is
 			  clkfx			: 		in  STD_LOGIC;
 			  res_n			: 		in  STD_LOGIC;
 			  
-			  y_paddle_left: 		in  y_axis_t;
-           y_paddle_right: 		in  y_axis_t;
-           x_ball 		: 	in  x_axis_t;
-           y_ball 		: 	in  y_axis_t;
+			  y_paddle_left: 		in  STD_LOGIC_VECTOR (10 downto 0);
+           y_paddle_right: 		in  STD_LOGIC_VECTOR (10 downto 0);
+           x_ball 		: 	in  STD_LOGIC_VECTOR (10 downto 0);
+           y_ball 		: 	in  STD_LOGIC_VECTOR (10 downto 0);
 			  l_scored 		: 		out  STD_LOGIC;
            r_scored 		: 		out  STD_LOGIC;
            l_paddle_hit : 	out  STD_LOGIC;
@@ -64,13 +64,12 @@ begin
   elsif rising_edge(clkfx) then
    case current_state is
 		when "00001" =>
-			if (x_ball = L_PADDLE_BLOCK and y_ball>(y_paddle_left-BALL_SIZE) and y_ball<(y_paddle_left+PADDLE_HIGHT)) then
+			if (x_ball = L_PADDLE_BLOCK and y_ball+BALL_SIZE>y_paddle_left and y_ball<(y_paddle_left+PADDLE_HIGHT)) then
 				l_paddle_hit <= '1';
 				current_state <= "00010";
-			elsif (x_ball = R_PADDLE_BLOCK and y_ball>(y_paddle_right-BALL_SIZE) and y_ball<(y_paddle_right+PADDLE_HIGHT)) then
+			elsif (x_ball = R_PADDLE_BLOCK and y_ball+BALL_SIZE>y_paddle_right and y_ball<(y_paddle_right+PADDLE_HIGHT)) then
 				r_paddle_hit <= '1';
 				current_state <= "00100";
-			-- scored korrigieren
 			elsif (x_ball = 0 ) then
 				r_scored <= '1';
 				current_state <= "01000";
